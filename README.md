@@ -27,6 +27,38 @@ To drop the Bosnian version entirely: delete the `bs` block, remove the toggle i
 
 There is deliberately **no CV download** — the page is the CV.
 
+### Featured project
+
+`work.featured` renders as a full case study (metrics, screenshot gallery, growth chart,
+press links) above the regular project grid; `work.items` holds ordinary projects and is
+empty for now. Press coverage is shared between languages in the `SLIBE_PRESS` const at the
+top of `content.js`, since the headlines are Bosnian either way.
+
+Screenshots go in `src/assets/slibe/`. Each entry in `work.featured.shots` names one by
+bare filename with no extension (`file: 'slibealbum1'`), so gallery order is set by the
+content rather than by how the files happen to sort. A shot whose file is missing is
+skipped, so the gallery never renders an empty frame.
+
+The grid draws thumbnails from `src/assets/slibe/thumbs/`; the lightbox loads the full
+image only when someone opens it. To add screenshots, drop the raw exports in
+`src/assets/slibe/` and run:
+
+```bash
+npm i -D sharp
+node scripts/optimize-images.mjs
+npm uninstall sharp
+```
+
+That writes a 1000px WebP and a 400px WebP thumbnail for each, and moves your raw exports
+to `src/assets/slibe/original/` (outside the import globs, so they are kept but never
+bundled). `sharp` is deliberately not a project dependency — the site does not build or run
+with it. The conversion is worth doing: for the five Slibe screens it took the gallery from
+1509 kB of PNG to 161 kB of WebP.
+
+The project logo stays a plain PNG at `src/assets/slibe/logoslibe.png` and is picked up
+automatically as `slibeLogo`. Keep it small — a wordmark drawn at 32px does not need to be
+8000px wide, and browsers decode the full bitmap into memory regardless of display size.
+
 ### Portrait
 
 Save your photo as `src/assets/portrait.jpg` (`.jpeg`, `.png`, `.webp` and `.avif` also

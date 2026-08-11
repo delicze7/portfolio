@@ -20,6 +20,68 @@ const portraits = import.meta.glob('./assets/portrait.{avif,jpeg,jpg,png,webp}',
 })
 const portrait = Object.values(portraits)[0]
 
+// Screenshots for the featured project. Drop image files into
+// `src/assets/slibe/` and reference them by bare filename (no extension) from
+// `work.featured.shots` — that way the gallery order is set by the content, not
+// by how the files happen to sort.
+const shotModules = import.meta.glob('./assets/slibe/*.{avif,jpeg,jpg,png,webp}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+export const slibeShots = Object.fromEntries(
+  Object.entries(shotModules).map(([path, url]) => [
+    path.replace(/^.*\//, '').replace(/\.[^.]+$/, ''),
+    url,
+  ]),
+)
+
+// Small versions for the gallery grid, which draws them ~195px wide. Loading
+// the full 1000px files there would cost ~1.5 MB; these cost ~160 kB.
+const thumbModules = import.meta.glob('./assets/slibe/thumbs/*.{avif,jpeg,jpg,png,webp}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+export const slibeThumbs = Object.fromEntries(
+  Object.entries(thumbModules).map(([path, url]) => [
+    path.replace(/^.*\//, '').replace(/\.[^.]+$/, ''),
+    url,
+  ]),
+)
+
+/** White wordmark, shown in place of the project title. */
+export const slibeLogo = slibeShots.logoslibe
+
+// Press coverage is the same in both languages — the headlines are Bosnian
+// either way — so it lives here instead of being duplicated and drifting.
+const SLIBE_PRESS = [
+  {
+    outlet: 'Klix.ba',
+    date: '19.05.2026.',
+    title: 'Mladi bh. inženjeri pokrenuli slibe.online: Platforma koja je zaludjela kolekcionare',
+    href: 'https://www.klix.ba/sport/nogomet/mladi-bh-inzenjeri-pokrenuli-slibeonline-platforma-koja-je-zaludjela-kolekcionare/260519128',
+  },
+  {
+    outlet: 'Radio Sarajevo',
+    date: '06.05.2026.',
+    title: 'Mladići kreirali stranicu za kolekcionare: Kako "slibe.online" olakšava razmjenu sličica u BiH',
+    href: 'https://radiosarajevo.ba/metromahala/teme/mladici-kreirali-stranicu-za-kolekcionare-slibe-online/636324',
+  },
+  {
+    outlet: 'Vijesti.ba',
+    date: '2026.',
+    title: 'Za sve ljubitelje sličica: Pokrenuta platforma Slibe.online',
+    href: 'https://www.vijesti.ba/clanak/754898/za-sve-ljubitelje-slicica-pokrenuta-platforma-slibe-online',
+  },
+  {
+    outlet: 'etto.ba',
+    date: '2026.',
+    title: 'Pokrenuta nova platforma za kolekcionare Panini sličica',
+    href: 'https://etto.ba/clanak/pokrenuta-nova-platforma-za-kolekcionare-panini-slicica',
+  },
+]
+
 export const profile = {
   name: 'Zejd Delic',
   handle: 'zejd',
@@ -90,71 +152,99 @@ export const content = {
 
     work: {
       heading: 'selected work',
-      note: 'Four projects, each with the trade-off I actually had to make.',
+      note: 'One project, told properly. More will follow.',
       labels: {
         problem: 'problem',
         decision: 'decision',
         tradeoff: 'trade-off',
         result: 'result',
-        expand: 'read case study',
-        collapse: 'close',
+        role: 'my role',
+        stack: 'built with',
+        growth: 'registered users',
+        gallery: 'screens',
+        press: 'in the press',
+        visit: 'open',
         source: 'source',
         live: 'live',
+        close: 'close',
+        kofi: 'Support on Ko-fi',
+        kofiNote:
+          'Slibe is free and always has been. Four people run it in their own time and donations pay the server bill.',
       },
-      items: [
-        {
-          id: 'ledger',
-          name: 'ledger-core',
-          blurb: 'Double-entry ledger handling 40k transactions/day.',
-          year: '2025',
-          stack: ['Go', 'PostgreSQL', 'Kafka', 'gRPC'],
-          problem:
-            'Placeholder: what was broken or missing before you showed up. One or two sentences, concrete numbers if you have them.',
-          decision:
-            'Placeholder: the approach you chose and why that one over the obvious alternative.',
-          tradeoff:
-            'Placeholder: what you knowingly gave up. This is the section nobody writes and the only one that proves seniority.',
-          result:
-            'Placeholder: the measurable outcome. Latency, cost, error rate, hours saved — anything a number can attach to.',
-          links: { live: '', source: '' },
-        },
-        {
-          id: 'atlas',
-          name: 'atlas',
-          blurb: 'Internal service catalog and dependency graph.',
-          year: '2024',
-          stack: ['TypeScript', 'React', 'Neo4j'],
-          problem: 'Placeholder: the problem this project solved.',
-          decision: 'Placeholder: your architectural decision.',
-          tradeoff: 'Placeholder: what it cost you.',
-          result: 'Placeholder: the outcome.',
-          links: { live: '', source: '' },
-        },
-        {
-          id: 'pipeline',
-          name: 'pipeline-rs',
-          blurb: 'Stream processor that replaced a nightly cron batch.',
-          year: '2024',
-          stack: ['Rust', 'Redis', 'Docker'],
-          problem: 'Placeholder: the problem this project solved.',
-          decision: 'Placeholder: your architectural decision.',
-          tradeoff: 'Placeholder: what it cost you.',
-          result: 'Placeholder: the outcome.',
-          links: { live: '', source: '' },
-        },
-        {
-          id: 'sentry',
-          name: 'watchtower',
-          blurb: 'Alerting layer that cut on-call pages by two thirds.',
-          year: '2023',
-          stack: ['Python', 'Prometheus', 'Terraform'],
-          problem: 'Placeholder: the problem this project solved.',
-          decision: 'Placeholder: your architectural decision.',
-          tradeoff: 'Placeholder: what it cost you.',
-          result: 'Placeholder: the outcome.',
-          links: { live: '', source: '' },
-        },
-      ],
+
+      featured: {
+        id: 'slibe',
+        name: 'slibe.online',
+        year: '2026',
+        tagline:
+          'A sticker album rebuilt in the browser, with an algorithm that finds you the person holding the number you are missing.',
+
+        role: 'Four of us, deliberately working across the whole product instead of each sitting in a private corner of it — a side project built around full-time jobs. Alongside the build I ran the press and outreach: the articles landed inside exactly the window where the platform went from 500 to 5.000 users in thirteen days.',
+        // Empty array hides the block — fill it in once the stack is confirmed.
+        stack: [],
+
+        metrics: [
+          { v: '13.000+', k: 'registered users' },
+          { v: '1M+', k: 'stickers entered' },
+          { v: '0 KM', k: 'cost to collectors' },
+        ],
+
+        growth: [
+          { when: '6 May 2026', value: 500, display: '500' },
+          { when: '19 May 2026', value: 5000, display: '5.000' },
+          { when: 'August 2026', value: 13000, display: '13.000+' },
+        ],
+
+        problem:
+          'Sticker trading ran on Facebook groups — hundreds of unreadable comments, and no way to see who actually held the one number you were missing. The World Cup 2026 album runs to 992 stickers and a packet of seven costs 2,50 KM, so buying your way to a full album gets expensive fast.',
+        decision:
+          'We rebuilt the album one-to-one in the browser: mark what you own, what you are missing, what you have spare. A matching algorithm then does the searching, pairs collectors whose collections complement each other, and hands them a built-in chat to settle the trade.',
+        // Empty string hides this block until there is something real to say.
+        tradeoff: '',
+        result:
+          '500 registered users on 6 May 2026. Five thousand thirteen days later. Past 13.000 today, with more than a million stickers entered. Built and run by four engineers as volunteer work, free for everyone, funded by donations.',
+
+        // `file` is the bare filename in src/assets/slibe/. Order here is the
+        // order of the gallery tabs.
+        shots: [
+          {
+            file: 'slibealbum1',
+            label: 'album',
+            caption:
+              'The album rebuilt page by page, 99 pages of it. A completion bar, filters for missing, owned and duplicate stickers, and a PDF export of the whole thing.',
+          },
+          {
+            file: 'sliberazmjena1',
+            label: 'trades',
+            caption:
+              'Trading partners ranked by how well two collections fit, with what each side gives and gets shown up front. Filterable by city, so a trade can end as a handover rather than a parcel.',
+          },
+          {
+            file: 'slibeporuke1',
+            label: 'chat',
+            caption:
+              'A trade is a real object, not a conversation: both halves laid out sticker by sticker, editable, with a pending state until the other side confirms.',
+          },
+          {
+            file: 'slibeprofil1',
+            label: 'profile',
+            caption:
+              'A shareable public profile — owned, duplicate and missing counts, completion, and the album as a downloadable PDF.',
+          },
+          {
+            file: 'slibeprijava1',
+            label: 'sign-in',
+            caption:
+              'One-tap Google sign-in and an install prompt — it runs as an installable web app, so there is no app store between a collector and their album.',
+          },
+        ],
+
+        press: SLIBE_PRESS,
+        links: { live: 'https://www.slibe.online', source: '', kofi: 'https://ko-fi.com/slibeonline' },
+      },
+
+      // Future projects go here — they render as cards under the featured one.
+      items: [],
     },
 
     approach: {
@@ -387,71 +477,99 @@ export const content = {
 
     work: {
       heading: 'odabrani radovi',
-      note: 'Četiri projekta, svaki sa trade-offom koji sam stvarno morao napraviti.',
+      note: 'Jedan projekat, ispričan kako treba. Slijede još.',
       labels: {
         problem: 'problem',
         decision: 'odluka',
         tradeoff: 'trade-off',
         result: 'rezultat',
-        expand: 'pročitaj case study',
-        collapse: 'zatvori',
+        role: 'moja uloga',
+        stack: 'napravljeno u',
+        growth: 'registrovanih korisnika',
+        gallery: 'ekrani',
+        press: 'u medijima',
+        visit: 'otvori',
         source: 'kod',
         live: 'uživo',
+        close: 'zatvori',
+        kofi: 'Podrži na Ko-fi',
+        kofiNote:
+          'Slibe je besplatan i uvijek je bio. Četvero ljudi ga vodi u svoje slobodno vrijeme, a donacije plaćaju server.',
       },
-      items: [
-        {
-          id: 'ledger',
-          name: 'ledger-core',
-          blurb: 'Dvojni knjigovodstveni sistem sa 40k transakcija dnevno.',
-          year: '2025',
-          stack: ['Go', 'PostgreSQL', 'Kafka', 'gRPC'],
-          problem:
-            'Placeholder: šta je bilo pokvareno ili nije postojalo prije tebe. Jedna-dvije rečenice, s brojevima ako ih imaš.',
-          decision:
-            'Placeholder: pristup koji si odabrao i zašto baš taj, a ne očigledna alternativa.',
-          tradeoff:
-            'Placeholder: šta si svjesno žrtvovao. Ovo niko ne piše, a jedino ovo dokazuje da si senior.',
-          result:
-            'Placeholder: mjerljiv ishod. Latencija, trošak, error rate, ušteđeni sati — bilo šta uz šta ide broj.',
-          links: { live: '', source: '' },
-        },
-        {
-          id: 'atlas',
-          name: 'atlas',
-          blurb: 'Interni katalog servisa i graf zavisnosti.',
-          year: '2024',
-          stack: ['TypeScript', 'React', 'Neo4j'],
-          problem: 'Placeholder: problem koji je ovaj projekat riješio.',
-          decision: 'Placeholder: tvoja arhitektonska odluka.',
-          tradeoff: 'Placeholder: šta te je koštalo.',
-          result: 'Placeholder: ishod.',
-          links: { live: '', source: '' },
-        },
-        {
-          id: 'pipeline',
-          name: 'pipeline-rs',
-          blurb: 'Stream procesor koji je zamijenio noćni cron batch.',
-          year: '2024',
-          stack: ['Rust', 'Redis', 'Docker'],
-          problem: 'Placeholder: problem koji je ovaj projekat riješio.',
-          decision: 'Placeholder: tvoja arhitektonska odluka.',
-          tradeoff: 'Placeholder: šta te je koštalo.',
-          result: 'Placeholder: ishod.',
-          links: { live: '', source: '' },
-        },
-        {
-          id: 'sentry',
-          name: 'watchtower',
-          blurb: 'Sloj za alerte koji je smanjio on-call pozive za dvije trećine.',
-          year: '2023',
-          stack: ['Python', 'Prometheus', 'Terraform'],
-          problem: 'Placeholder: problem koji je ovaj projekat riješio.',
-          decision: 'Placeholder: tvoja arhitektonska odluka.',
-          tradeoff: 'Placeholder: šta te je koštalo.',
-          result: 'Placeholder: ishod.',
-          links: { live: '', source: '' },
-        },
-      ],
+
+      featured: {
+        id: 'slibe',
+        name: 'slibe.online',
+        year: '2026',
+        tagline:
+          'Album sličica prenesen u browser, s algoritmom koji ti nađe čovjeka koji drži baš onaj broj koji tebi fali.',
+
+        role: 'Četvero nas, namjerno uključenih u cijeli proizvod umjesto da svako sjedi u svom uglu — side projekat rađen uz redovne poslove. Pored razvoja, vodio sam medijsku promociju i komunikaciju s portalima: objave su izašle tačno u onom prozoru u kojem je platforma otišla s 500 na 5.000 korisnika za trinaest dana.',
+        // Prazan niz sakriva blok — popuni kad potvrdiš stack.
+        stack: [],
+
+        metrics: [
+          { v: '13.000+', k: 'registrovanih korisnika' },
+          { v: '1M+', k: 'unesenih sličica' },
+          { v: '0 KM', k: 'cijena za kolekcionare' },
+        ],
+
+        growth: [
+          { when: '6. maj 2026.', value: 500, display: '500' },
+          { when: '19. maj 2026.', value: 5000, display: '5.000' },
+          { when: 'august 2026.', value: 13000, display: '13.000+' },
+        ],
+
+        problem:
+          'Razmjena sličica godinama se svodila na Facebook grupe — stotine nepreglednih komentara i nikakav način da vidiš ko zaista ima baš onaj broj koji tebi fali. Album za Svjetsko prvenstvo 2026. ima 992 sličice, a paketić od sedam košta 2,50 KM, pa kupovina do punog albuma brzo postane skupa.',
+        decision:
+          'Prenijeli smo album jedan-na-jedan u browser: označiš šta imaš, šta ti fali i šta su ti duplikati. Algoritam onda sam traži, spaja kolekcionare čije se kolekcije poklapaju, i daje im ugrađeni chat da dogovore razmjenu.',
+        // Prazan string sakriva blok dok nemaš šta stvarno reći.
+        tradeoff: '',
+        result:
+          '500 registrovanih korisnika 6. maja 2026. Pet hiljada trinaest dana kasnije. Preko 13.000 danas, uz više od milion unesenih sličica. Radi i održava četvero inženjera volonterski, besplatno za sve, uz donacije.',
+
+        // `file` je golo ime fajla iz src/assets/slibe/. Redoslijed ovdje je
+        // redoslijed tabova u galeriji.
+        shots: [
+          {
+            file: 'slibealbum1',
+            label: 'album',
+            caption:
+              'Album prenesen stranicu po stranicu, njih 99. Traka popunjenosti, filteri za ono što fali, što imaš i duplikate, i export cijelog albuma u PDF.',
+          },
+          {
+            file: 'sliberazmjena1',
+            label: 'razmjena',
+            caption:
+              'Partneri za zamjenu poredani po tome koliko se dvije kolekcije poklapaju, sa brojem koji svako daje i dobija odmah vidljivim. Filter po gradu, pa razmjena može završiti kao predaja iz ruke u ruku umjesto paketa.',
+          },
+          {
+            file: 'slibeporuke1',
+            label: 'poruke',
+            caption:
+              'Razmjena je stvarni objekat, ne dogovor u razgovoru: obje strane složene sličicu po sličicu, s mogućnošću izmjene i statusom "na čekanju" dok druga strana ne potvrdi.',
+          },
+          {
+            file: 'slibeprofil1',
+            label: 'profil',
+            caption:
+              'Javni profil koji se dijeli — koliko imaš, koliko je duplikata, koliko fali, procenat popunjenosti i album kao PDF.',
+          },
+          {
+            file: 'slibeprijava1',
+            label: 'prijava',
+            caption:
+              'Prijava Googleom u jedan klik i poziv za instalaciju — radi kao instalabilna web aplikacija, pa između kolekcionara i albuma nema app storea.',
+          },
+        ],
+
+        press: SLIBE_PRESS,
+        links: { live: 'https://www.slibe.online', source: '', kofi: 'https://ko-fi.com/slibeonline' },
+      },
+
+      // Budući projekti idu ovdje — renderuju se kao kartice ispod istaknutog.
+      items: [],
     },
 
     approach: {

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useLang } from '../i18n/LanguageContext.jsx'
+import { slibeShots, slibeThumbs, slibeLogo } from '../content.js'
 import Section from './Section.jsx'
+import Featured from './Featured.jsx'
 
 const FIELD_COLORS = {
   problem: 'border-warn/50',
@@ -91,11 +93,21 @@ export default function Work() {
 
   return (
     <Section id="work" index={1} file="work.md" heading={t.work.heading} note={t.work.note}>
-      <div className="grid gap-5 sm:grid-cols-2">
-        {t.work.items.map((item) => (
-          <CaseStudy key={item.id} item={item} labels={t.work.labels} />
-        ))}
-      </div>
+      <Featured
+        project={t.work.featured}
+        labels={t.work.labels}
+        shotUrls={slibeShots}
+        thumbUrls={slibeThumbs}
+        logo={slibeLogo}
+      />
+
+      {t.work.items.length > 0 && (
+        <div className="mt-6 grid gap-5 sm:grid-cols-2">
+          {t.work.items.map((item) => (
+            <CaseStudy key={item.id} item={item} labels={t.work.labels} />
+          ))}
+        </div>
+      )}
     </Section>
   )
 }
