@@ -242,14 +242,14 @@ export default function Featured({ project, labels, shotUrls, thumbUrls, logo })
     <article className="rounded-lg border border-line bg-panel p-5 sm:p-8">
       {/* Header — the wordmark stands in for the project title. */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-        <h3 className="flex items-center gap-2.5">
-          {logo ? (
-            <img src={logo} alt={project.name} className="h-6 w-auto sm:h-8" />
-          ) : (
-            <span className="text-2xl font-bold tracking-tight text-fg sm:text-3xl">
-              {project.name}
-            </span>
-          )}
+        <h3 className="flex items-center gap-3">
+          {/* Empty alt: the wordmark and the text below say the same thing, and
+              a screen reader should hear it once. */}
+          {logo && <img src={logo} alt="" className="h-4 w-auto sm:h-5" />}
+          {logo && <span className="h-4 w-px bg-line" aria-hidden="true" />}
+          <span className="text-xl font-bold tracking-tight text-fg sm:text-2xl">
+            {project.name}
+          </span>
         </h3>
         <span className="flex items-center gap-2 rounded border border-acc/40 px-2 py-0.5 text-[11px] text-acc">
           <span className="relative flex h-1.5 w-1.5">

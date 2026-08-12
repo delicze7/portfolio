@@ -183,8 +183,7 @@ export const content = {
           'A sticker album rebuilt in the browser, with an algorithm that finds you the person holding the number you are missing.',
 
         role: 'Four of us, deliberately working across the whole product instead of each sitting in a private corner of it — a side project built around full-time jobs. Alongside the build I ran the press and outreach: the articles landed inside exactly the window where the platform went from 500 to 5.000 users in thirteen days.',
-        // Empty array hides the block — fill it in once the stack is confirmed.
-        stack: [],
+        stack: ['React', 'Supabase', 'PostgreSQL', 'Cloudflare'],
 
         metrics: [
           { v: '13.000+', k: 'registered users' },
@@ -201,9 +200,9 @@ export const content = {
         problem:
           'Sticker trading ran on Facebook groups — hundreds of unreadable comments, and no way to see who actually held the one number you were missing. The World Cup 2026 album runs to 992 stickers and a packet of seven costs 2,50 KM, so buying your way to a full album gets expensive fast.',
         decision:
-          'We rebuilt the album one-to-one in the browser: mark what you own, what you are missing, what you have spare. A matching algorithm then does the searching, pairs collectors whose collections complement each other, and hands them a built-in chat to settle the trade.',
-        // Empty string hides this block until there is something real to say.
-        tradeoff: '',
+          'We rebuilt the album one-to-one in the browser: mark what you own, what you are missing, what you have spare. A matching algorithm then does the searching, pairs collectors whose collections complement each other, and hands them a built-in chat to settle the trade. There is no backend of our own — Supabase holds the database and the auth, Cloudflare serves the sticker images. Four people with day jobs cannot also keep infrastructure standing.',
+        tradeoff:
+          'Matching ran in real time at first: every sticker you ticked recalculated your matches against everyone else on the spot. At a few hundred users that felt like magic. At a few thousand it took the database down, and always at the worst moment — the evening, when everyone was trading. We moved it to a batch that runs every minute. The cost is honest: a sticker you tick now reaches your partners on the next pass, not instantly. The platform stopped falling over precisely when the most people were on it, and we took the slower answer over the one that was not there at all.',
         result:
           '500 registered users on 6 May 2026. Five thousand thirteen days later. Past 13.000 today, with more than a million stickers entered. Built and run by four engineers as volunteer work, free for everyone, funded by donations.',
 
@@ -497,8 +496,7 @@ export const content = {
           'Album sličica prenesen u browser, s algoritmom koji ti nađe čovjeka koji drži baš onaj broj koji tebi fali.',
 
         role: 'Četvero nas, namjerno uključenih u cijeli proizvod umjesto da svako sjedi u svom uglu — side projekat rađen uz redovne poslove. Pored razvoja, vodio sam medijsku promociju i komunikaciju s portalima: objave su izašle tačno u onom prozoru u kojem je platforma otišla s 500 na 5.000 korisnika za trinaest dana.',
-        // Prazan niz sakriva blok — popuni kad potvrdiš stack.
-        stack: [],
+        stack: ['React', 'Supabase', 'PostgreSQL', 'Cloudflare'],
 
         metrics: [
           { v: '13.000+', k: 'registrovanih korisnika' },
@@ -515,9 +513,9 @@ export const content = {
         problem:
           'Razmjena sličica godinama se svodila na Facebook grupe — stotine nepreglednih komentara i nikakav način da vidiš ko zaista ima baš onaj broj koji tebi fali. Album za Svjetsko prvenstvo 2026. ima 992 sličice, a paketić od sedam košta 2,50 KM, pa kupovina do punog albuma brzo postane skupa.',
         decision:
-          'Prenijeli smo album jedan-na-jedan u browser: označiš šta imaš, šta ti fali i šta su ti duplikati. Algoritam onda sam traži, spaja kolekcionare čije se kolekcije poklapaju, i daje im ugrađeni chat da dogovore razmjenu.',
-        // Prazan string sakriva blok dok nemaš šta stvarno reći.
-        tradeoff: '',
+          'Prenijeli smo album jedan-na-jedan u browser: označiš šta imaš, šta ti fali i šta su ti duplikati. Algoritam onda sam traži, spaja kolekcionare čije se kolekcije poklapaju, i daje im ugrađeni chat da dogovore razmjenu. Vlastitog backenda nema — Supabase drži bazu i autentikaciju, Cloudflare servira slike sličica. Četvero ljudi uz redovne poslove ne može uz sve to još i održavati infrastrukturu.',
+        tradeoff:
+          'Uparivanje je isprva radilo u realnom vremenu: svaka sličica koju označiš odmah je ponovo računala poklapanja prema svima ostalima. Na nekoliko stotina korisnika to je djelovalo kao magija. Na nekoliko hiljada je obaralo bazu, i to uvijek u najgorem trenutku — navečer, kad svi razmjenjuju. Prebacili smo ga na batch koji se vrti svake minute. Cijena je poštena: sličica koju sad označiš stiže do partnera u sljedećem prolazu, ne istog trena. Zauzvrat je platforma prestala padati baš kad je najviše ljudi na njoj — sporiji odgovor je bolji od nikakvog.',
         result:
           '500 registrovanih korisnika 6. maja 2026. Pet hiljada trinaest dana kasnije. Preko 13.000 danas, uz više od milion unesenih sličica. Radi i održava četvero inženjera volonterski, besplatno za sve, uz donacije.',
 
