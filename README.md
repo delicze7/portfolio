@@ -113,8 +113,7 @@ palette all read from that array.
   chosen a language, so there is nothing to translate it against. Its timings are the
   constants at the top of [`src/components/Boot.jsx`](src/components/Boot.jsx) — `EXIT_AT`
   is the one to change to make it longer or shorter.
-- **Boot sequence** plays once per browser tab (`sessionStorage`), and any key or click
-  skips it.
+- **The intro plays on every page load**, not once per session. Any key or click skips it.
 - **Console message** lives in [`src/main.jsx`](src/main.jsx) — visitors who open DevTools
   get your email.
 - **`prefers-reduced-motion`** is respected everywhere: the boot screen is skipped, typing

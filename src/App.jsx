@@ -12,17 +12,13 @@ import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import CommandPalette from './components/CommandPalette.jsx'
 
-const BOOT_KEY = 'portfolio:booted'
-
 export default function App() {
-  // Boot plays once per tab session — charming the first time, tedious the fifth.
-  const [booted, setBooted] = useState(() => sessionStorage.getItem(BOOT_KEY) === '1')
+  // The intro plays on every load, by design. Any key or click skips it, and
+  // prefers-reduced-motion skips it outright.
+  const [booted, setBooted] = useState(false)
   const [paletteOpen, setPaletteOpen] = useState(false)
 
-  const finishBoot = useCallback(() => {
-    sessionStorage.setItem(BOOT_KEY, '1')
-    setBooted(true)
-  }, [])
+  const finishBoot = useCallback(() => setBooted(true), [])
 
   useEffect(() => {
     const onKey = (e) => {

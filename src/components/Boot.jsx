@@ -5,17 +5,20 @@ import { cx } from '../utils.js'
 
 const TICK = 40
 
-// Whole sequence, in ms from mount. Shorten EXIT_AT to make the intro snappier.
-const CMD_START = 250
-const CMD_SPEED = 34
-const WELCOME_AT = 1000
-const LINE_AT = [1200, 1450, 1700]
-const NAME_START = 1350
-const NAME_DUR = 1150
-const BAR_START = 950
-const BAR_END = 3050
-const EXIT_AT = 3200
-const FADE = 550
+// Whole sequence, in ms from mount, running ~4.6s end to end.
+// Every beat is spaced against the others, so stretching the intro means
+// scaling these together rather than pushing EXIT_AT out and leaving the last
+// second empty.
+const CMD_START = 300
+const CMD_SPEED = 42
+const WELCOME_AT = 1200
+const LINE_AT = [1450, 1800, 2150]
+const NAME_START = 1750
+const NAME_DUR = 1500
+const BAR_START = 1150
+const BAR_END = 3800
+const EXIT_AT = 4000
+const FADE = 600
 
 const GLYPHS = '#$%&*+-<>[]{}/\\=?!ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 const BAR_WIDTH = 26
@@ -35,7 +38,7 @@ function scramble(text, progress) {
 }
 
 /**
- * The intro that plays once per browser tab.
+ * The intro that plays on every page load.
  *
  * The `> zejd` mark is positioned to land exactly where the nav mark will be,
  * so when the overlay fades the mark does not move — the site assembles around
