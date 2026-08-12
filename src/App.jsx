@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useLang } from './i18n/LanguageContext.jsx'
+import { boot } from './content.js'
 import Boot from './components/Boot.jsx'
 import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
@@ -15,7 +15,6 @@ import CommandPalette from './components/CommandPalette.jsx'
 const BOOT_KEY = 'portfolio:booted'
 
 export default function App() {
-  const { t } = useLang()
   // Boot plays once per tab session — charming the first time, tedious the fifth.
   const [booted, setBooted] = useState(() => sessionStorage.getItem(BOOT_KEY) === '1')
   const [paletteOpen, setPaletteOpen] = useState(false)
@@ -38,7 +37,7 @@ export default function App() {
 
   return (
     <>
-      {!booted && <Boot boot={t.boot} onDone={finishBoot} />}
+      {!booted && <Boot boot={boot} onDone={finishBoot} />}
 
       {/* Ambient background: blueprint grid plus one soft glow behind the hero. */}
       <div className="pointer-events-none fixed inset-0 -z-10">

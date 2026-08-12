@@ -82,6 +82,20 @@ const SLIBE_PRESS = [
   },
 ]
 
+/**
+ * The intro screen. English only — it plays before the visitor has picked a
+ * language, and swapping its wording mid-animation would be worse than leaving
+ * it in one. Timings live in src/components/Boot.jsx.
+ */
+export const boot = {
+  command: 'ssh zejd@portfolio',
+  welcome: 'You are in the right place.',
+  lines: ['establishing connection', 'loading projects', 'checking coffee levels'],
+  loading: 'loading zejd portfolio',
+  role: 'software engineer',
+  skip: 'press any key to skip',
+}
+
 export const profile = {
   name: 'Zejd Delic',
   handle: 'zejd',
@@ -105,15 +119,6 @@ export const content = {
       lab: 'lab',
       contact: 'contact',
       command: 'command',
-    },
-
-    boot: {
-      command: 'ssh zejd@portfolio',
-      welcome: 'You are in the right place.',
-      lines: ['establishing connection', 'loading projects', 'checking coffee levels'],
-      loading: 'loading zejd portfolio',
-      role: 'software engineer',
-      skip: 'press any key to skip',
     },
 
     hero: {
@@ -428,15 +433,6 @@ export const content = {
       lab: 'lab',
       contact: 'kontakt',
       command: 'komande',
-    },
-
-    boot: {
-      command: 'ssh zejd@portfolio',
-      welcome: 'Na pravom ste mjestu.',
-      lines: ['uspostavljam vezu', 'učitavam projekte', 'provjeravam nivo kafe'],
-      loading: 'loading zejd portfolio',
-      role: 'softverski inženjer',
-      skip: 'bilo koja tipka preskače',
     },
 
     hero: {

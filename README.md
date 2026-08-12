@@ -108,6 +108,11 @@ palette all read from that array.
   them — `focus` does this. Timings live in the `Fact` component and `FACT_STAGGER` at the
   top of [`src/components/Hero.jsx`](src/components/Hero.jsx); to freeze the values, pass
   `active={false}` to `<Fact>`.
+- **The intro screen is English only** and lives in the top-level `boot` export in
+  `src/content.js`, outside `content.en` / `content.bs`. It plays before the visitor has
+  chosen a language, so there is nothing to translate it against. Its timings are the
+  constants at the top of [`src/components/Boot.jsx`](src/components/Boot.jsx) — `EXIT_AT`
+  is the one to change to make it longer or shorter.
 - **Boot sequence** plays once per browser tab (`sessionStorage`), and any key or click
   skips it.
 - **Console message** lives in [`src/main.jsx`](src/main.jsx) — visitors who open DevTools
