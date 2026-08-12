@@ -108,13 +108,11 @@ export const content = {
     },
 
     boot: {
-      lines: [
-        'initializing portfolio kernel',
-        'mounting /projects',
-        'loading experience.log',
-        'checking coffee levels ......... OK',
-        'starting session',
-      ],
+      command: 'ssh zejd@portfolio',
+      welcome: 'You are in the right place.',
+      lines: ['establishing connection', 'loading projects', 'checking coffee levels'],
+      loading: 'loading zejd portfolio',
+      role: 'software engineer',
       skip: 'press any key to skip',
     },
 
@@ -433,14 +431,12 @@ export const content = {
     },
 
     boot: {
-      lines: [
-        'pokrećem kernel portfolija',
-        'montiram /projekti',
-        'učitavam iskustvo.log',
-        'provjeravam nivo kafe ......... OK',
-        'pokrećem sesiju',
-      ],
-      skip: 'pritisni bilo koju tipku za preskočiti',
+      command: 'ssh zejd@portfolio',
+      welcome: 'Na pravom ste mjestu.',
+      lines: ['uspostavljam vezu', 'učitavam projekte', 'provjeravam nivo kafe'],
+      loading: 'loading zejd portfolio',
+      role: 'softverski inženjer',
+      skip: 'bilo koja tipka preskače',
     },
 
     hero: {

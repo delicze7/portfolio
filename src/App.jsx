@@ -38,9 +38,7 @@ export default function App() {
 
   return (
     <>
-      {!booted && (
-        <Boot lines={t.boot.lines} skipLabel={t.boot.skip} onDone={finishBoot} />
-      )}
+      {!booted && <Boot boot={t.boot} onDone={finishBoot} />}
 
       {/* Ambient background: blueprint grid plus one soft glow behind the hero. */}
       <div className="pointer-events-none fixed inset-0 -z-10">
