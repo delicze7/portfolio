@@ -68,41 +68,55 @@ function Lightbox({ shots, index, onIndex, onClose, closeLabel }) {
 
   const shot = shots[index]
 
+  // Three rows: header, image, caption. The image row is `min-h-0 flex-1` so it
+  // gives up space to the other two instead of overflowing a short viewport —
+  // which is what a centred column does on a phone in landscape.
   return (
     <div
-      className="fixed inset-0 z-[95] flex flex-col items-center justify-center bg-black/88 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[95] flex flex-col bg-black/90 p-4 backdrop-blur-sm sm:p-6"
       onPointerDown={(e) => e.target === e.currentTarget && onClose()}
       role="dialog"
       aria-modal="true"
       aria-label={shot.label}
     >
-      <button
-        type="button"
-        onClick={onClose}
-        aria-label={closeLabel}
-        className="absolute top-4 right-4 rounded border border-line px-2.5 py-1 text-sm text-dim transition-colors hover:border-acc/50 hover:text-acc"
-      >
-        ✕
-      </button>
-
-      <img
-        key={shot.src}
-        src={shot.src}
-        alt={shot.caption}
-        className="max-h-[64vh] w-auto max-w-full animate-rise object-contain"
-      />
-
-      <div className="mt-5 w-full max-w-md text-center">
-        <p className="text-xs text-acc">
-          {String(index + 1).padStart(2, '0')}_{shot.label}
+      <div className="flex shrink-0 items-center justify-between gap-4 pb-3">
+        <p className="truncate text-xs text-acc">
+          <span className="text-line">{String(index + 1).padStart(2, '0')}_</span>
+          {shot.label}
         </p>
-        <p className="mt-2 font-sans text-sm leading-relaxed text-fg/80">{shot.caption}</p>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={closeLabel}
+          className="shrink-0 rounded border border-line px-2.5 py-1 text-sm text-dim transition-colors hover:border-acc/50 hover:text-acc"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div
+        className="flex min-h-0 flex-1 items-center justify-center"
+        onPointerDown={(e) => e.target === e.currentTarget && onClose()}
+      >
+        <img
+          key={shot.src}
+          src={shot.src}
+          alt={shot.caption}
+          className="max-h-full max-w-full object-contain"
+        />
+      </div>
+
+      <div className="mx-auto w-full max-w-md shrink-0 pt-4 text-center">
+        <p className="max-h-24 overflow-y-auto font-sans text-sm leading-relaxed text-fg/80">
+          {shot.caption}
+        </p>
 
         {shots.length > 1 && (
-          <div className="mt-5 flex items-center justify-center gap-4 text-sm">
+          <div className="mt-4 flex items-center justify-center gap-4 text-sm">
             <button
               type="button"
               onClick={() => go(-1)}
+              aria-label="previous"
               className="rounded border border-line px-3 py-1 text-dim transition-colors hover:border-acc/50 hover:text-acc"
             >
               ‹
@@ -113,6 +127,7 @@ function Lightbox({ shots, index, onIndex, onClose, closeLabel }) {
             <button
               type="button"
               onClick={() => go(1)}
+              aria-label="next"
               className="rounded border border-line px-3 py-1 text-dim transition-colors hover:border-acc/50 hover:text-acc"
             >
               ›
@@ -125,14 +140,14 @@ function Lightbox({ shots, index, onIndex, onClose, closeLabel }) {
 }
 
 /**
- * Compact contact-sheet gallery: every screen visible at once, click one to see
- * it full size. The renders are transparent PNGs, so they sit on a soft glow
- * rather than in a hard frame.
+ * One row of screens that scrolls sideways. It bleeds past the card padding so
+ * a partly-cut screen is visible at the edge — that, plus the scrollbar, is what
+ * tells you there is more without needing a caption to say so.
  */
 function Gallery({ shots, urls, thumbs, label, closeLabel }) {
   const [open, setOpen] = useState(null)
   const available = shots
-    // `thumb` feeds the grid, `src` the lightbox — fall back to the full file
+    // `thumb` feeds the strip, `src` the lightbox — fall back to the full file
     // if a thumbnail was never generated.
     .map((shot) => ({ ...shot, src: urls[shot.file], thumb: thumbs?.[shot.file] ?? urls[shot.file] }))
     .filter((s) => s.src)
@@ -144,31 +159,33 @@ function Gallery({ shots, urls, thumbs, label, closeLabel }) {
         <span className="text-acc">$</span> ls {label}/
       </p>
 
-      <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {available.map((shot, i) => (
-          <li key={shot.file}>
-            <button
-              type="button"
-              onClick={() => setOpen(i)}
-              className="group block w-full cursor-zoom-in"
-            >
-              <span className="block rounded-lg border border-line bg-[radial-gradient(ellipse_at_center,rgba(74,222,128,0.08),transparent_72%)] p-2 transition-colors group-hover:border-acc/40">
-                <img
-                  src={shot.thumb}
-                  alt={shot.caption}
-                  loading="lazy"
-                  decoding="async"
-                  className="mx-auto w-full object-contain transition-transform duration-300 group-hover:scale-[1.04]"
-                />
-              </span>
-              <span className="mt-2 block text-center text-[11px] text-dim transition-colors group-hover:text-acc">
-                <span className="text-line">{String(i + 1).padStart(2, '0')}_</span>
-                {shot.label}
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="-mx-5 mt-4 snap-x snap-mandatory overflow-x-auto scroll-px-5 px-5 pb-4 sm:-mx-8 sm:scroll-px-8 sm:px-8">
+        <ul className="flex w-max gap-4">
+          {available.map((shot, i) => (
+            <li key={shot.file} className="w-[46vw] max-w-[11rem] shrink-0 snap-start sm:w-44">
+              <button
+                type="button"
+                onClick={() => setOpen(i)}
+                className="group block w-full cursor-zoom-in"
+              >
+                <span className="block rounded-lg border border-line bg-[radial-gradient(ellipse_at_center,rgba(74,222,128,0.08),transparent_72%)] p-2 transition-colors group-hover:border-acc/40">
+                  <img
+                    src={shot.thumb}
+                    alt={shot.caption}
+                    loading="lazy"
+                    decoding="async"
+                    className="mx-auto w-full object-contain transition-transform duration-300 group-hover:scale-[1.04]"
+                  />
+                </span>
+                <span className="mt-2 block truncate text-center text-[11px] text-dim transition-colors group-hover:text-acc">
+                  <span className="text-line">{String(i + 1).padStart(2, '0')}_</span>
+                  {shot.label}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {open !== null && (
         <Lightbox
