@@ -53,6 +53,22 @@ export const slibeThumbs = Object.fromEntries(
 /** White wordmark, shown in place of the project title. */
 export const slibeLogo = slibeShots.logoslibe
 
+// Company logos for the work history. Drop files in `src/assets/companies/`
+// and point a work entry at one with `logo: '<bare filename>'`. Any logo works,
+// including dark ones — they render on a light tile. An entry without a logo
+// falls back to a monogram, so the column stays aligned either way.
+const companyModules = import.meta.glob('./assets/companies/*.{avif,jpeg,jpg,png,svg,webp}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+export const companyLogos = Object.fromEntries(
+  Object.entries(companyModules).map(([path, url]) => [
+    path.replace(/^.*\//, '').replace(/\.[^.]+$/, ''),
+    url,
+  ]),
+)
+
 // Press coverage is the same in both languages — the headlines are Bosnian
 // either way — so it lives here instead of being duplicated and drifting.
 const SLIBE_PRESS = [
@@ -321,42 +337,73 @@ export const content = {
 
     path: {
       heading: 'path',
-      note: 'git log --author="you" --reverse',
-      labels: { present: 'HEAD' },
-      entries: [
+      note: 'Each part of the story on its own branch.',
+      labels: {
+        present: 'HEAD',
+        verify: 'verify',
+        thesis: 'thesis',
+        branchCommand: 'git branch',
+        empty: 'Nothing here yet.',
+      },
+
+      // Tabs, in order. A branch with no entries hides itself.
+      branches: [
+        { id: 'work', label: 'work', command: 'git log --author="zejd"' },
+        { id: 'education', label: 'education', command: 'cat education.md' },
+        { id: 'certs', label: 'certificates', command: 'ls certificates/' },
+      ],
+
+      // Newest first. `current: true` marks a role that is still running — two
+      // of them overlap, which is the point.
+      work: [
         {
-          hash: 'a3f9d21',
+          hash: '4d7fa08',
           type: 'feat',
-          title: 'Senior Software Engineer',
-          org: 'Company Name',
-          period: '2024 — present',
-          body: 'Placeholder: one line on what you own, and one number that shows scale.',
+          title: 'Freelance Software Engineer',
+          org: 'Freelance',
+          logo: '',
+          mark: '>',
+          period: '01.2025 — present',
+          location: 'remote',
+          current: true,
+          body: 'I work for my own clients — web and mobile applications, websites, WordPress builds. Work arrives through referrals and through project platforms, and the clients are spread across several countries. Alongside the building there is the part that is not code: agreeing what gets made, by when, and for how much.',
+          metric: '',
+          stack: [],
+        },
+        {
+          hash: 'e91b4c2',
+          type: 'feat',
+          title: 'Digital Coordinator & Developer',
+          org: 'Humanitarna organizacija Kozarac',
+          logo: 'logoHO',
+          period: '01.2025 — present',
+          location: '',
+          current: true,
+          body: 'I keep the record of incoming payments and run the organisation website and its social accounts. For internal use I built HO CSV Import on my own — a tool for importing and processing CSV data that until then was handled by hand (more detail under projects). The role is semi-voluntary.',
+          metric: '',
+          stack: [],
         },
         {
           hash: '7c1e04b',
-          type: 'refactor',
-          title: 'Software Engineer',
-          org: 'Previous Company',
-          period: '2022 — 2024',
-          body: 'Placeholder: what changed because you were there.',
-        },
-        {
-          hash: 'd50a88f',
-          type: 'feat',
-          title: 'Junior Developer',
-          org: 'First Company',
-          period: '2021 — 2022',
-          body: 'Placeholder: where you learned the thing you still use every day.',
-        },
-        {
-          hash: '0000000',
           type: 'init',
-          title: 'BSc Computer Science',
-          org: 'University Name',
-          period: '2017 — 2021',
-          body: 'Placeholder: thesis topic, or the one course that actually mattered.',
+          title: 'Backend Developer',
+          org: 'Tech Towers d.o.o. Prijedor',
+          logo: 'techtowers',
+          period: '01.2022 — 01.2025',
+          location: 'Prijedor',
+          body: 'First job, and three years of backend work in .NET against SQL and PostgreSQL. Alongside building features, a large part of it was tuning queries and application logic so things held together as load grew. I worked inside project teams, from designing a solution through to shipping it.',
+          metric: '',
+          stack: ['.NET', 'SQL', 'PostgreSQL'],
         },
       ],
+
+      // Fill these in and the tab reappears on its own — a branch with no
+      // entries hides itself. Shape:
+      //   education: [{ degree, institution, period, note }]
+      education: [],
+
+      //   certs: [{ name, issuer, year, type, href }]
+      certs: [],
     },
 
     lab: {
@@ -634,42 +681,72 @@ export const content = {
 
     path: {
       heading: 'put',
-      note: 'git log --author="ti" --reverse',
-      labels: { present: 'HEAD' },
-      entries: [
+      note: 'Svaki dio priče u svojoj grani.',
+      labels: {
+        present: 'HEAD',
+        verify: 'provjeri',
+        thesis: 'završni rad',
+        branchCommand: 'git branch',
+        empty: 'Ovdje još nema ništa.',
+      },
+
+      // Tabovi, ovim redom. Grana bez unosa se sama sakrije.
+      branches: [
+        { id: 'work', label: 'posao', command: 'git log --author="zejd"' },
+        { id: 'education', label: 'obrazovanje', command: 'cat obrazovanje.md' },
+        { id: 'certs', label: 'certifikati', command: 'ls certifikati/' },
+      ],
+
+      // Najnovije prvo. `current: true` označava posao koji još traje — dva se
+      // preklapaju, i to je poenta.
+      work: [
         {
-          hash: 'a3f9d21',
+          hash: '4d7fa08',
           type: 'feat',
-          title: 'Senior softverski inženjer',
-          org: 'Ime firme',
-          period: '2024 — danas',
-          body: 'Placeholder: jedna linija o tome šta vodiš i jedan broj koji pokazuje razmjeru.',
+          title: 'Softverski inženjer — freelance',
+          org: 'Freelance',
+          logo: '',
+          mark: '>',
+          period: '01.2025 — danas',
+          location: 'remote',
+          current: true,
+          body: 'Radim za vlastite klijente — web i mobilne aplikacije, sajtovi, WordPress. Poslovi dolaze preko preporuka i preko platformi za projekte, a klijenti su iz raznih zemalja. Uz sam razvoj tu je i dio koji se ne piše u kodu: dogovoriti šta se gradi, u kom roku i za koji budžet.',
+          metric: '',
+          stack: [],
+        },
+        {
+          hash: 'e91b4c2',
+          type: 'feat',
+          title: 'Digitalni koordinator i razvoj',
+          org: 'Humanitarna organizacija Kozarac',
+          logo: 'logoHO',
+          period: '01.2025 — danas',
+          location: '',
+          current: true,
+          body: 'Vodim evidenciju uplata, web stranicu organizacije i društvene mreže. Za internu upotrebu sam samostalno razvio HO CSV Import — alat za uvoz i obradu CSV podataka koji su se do tada obrađivali ručno (detaljnije među projektima). Rad je polu-volonterski.',
+          metric: '',
+          stack: [],
         },
         {
           hash: '7c1e04b',
-          type: 'refactor',
-          title: 'Softverski inženjer',
-          org: 'Prethodna firma',
-          period: '2022 — 2024',
-          body: 'Placeholder: šta se promijenilo zato što si ti bio tu.',
-        },
-        {
-          hash: 'd50a88f',
-          type: 'feat',
-          title: 'Junior developer',
-          org: 'Prva firma',
-          period: '2021 — 2022',
-          body: 'Placeholder: gdje si naučio ono što i danas koristiš svaki dan.',
-        },
-        {
-          hash: '0000000',
           type: 'init',
-          title: 'BSc Računarstvo',
-          org: 'Ime fakulteta',
-          period: '2017 — 2021',
-          body: 'Placeholder: tema diplomskog, ili jedan predmet koji je stvarno značio.',
+          title: 'Backend developer',
+          org: 'Tech Towers d.o.o. Prijedor',
+          logo: 'techtowers',
+          period: '01.2022 — 01.2025',
+          location: 'Prijedor',
+          body: 'Prvo zaposlenje i tri godine backend razvoja u .NET-u, nad SQL i PostgreSQL bazama. Uz izradu novih funkcionalnosti, veliki dio posla bila je optimizacija upita i logike aplikacije — da rješenje ostane stabilno kako opterećenje raste. Radio sam unutar projektnih timova, od dizajna rješenja do isporuke.',
+          metric: '',
+          stack: ['.NET', 'SQL', 'PostgreSQL'],
         },
       ],
+
+      // Popuni ih i tab se sam vrati — grana bez unosa se sakriva. Oblik:
+      //   education: [{ degree, institution, period, note }]
+      education: [],
+
+      //   certs: [{ name, issuer, year, type, href }]
+      certs: [],
     },
 
     lab: {

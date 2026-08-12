@@ -55,6 +55,18 @@ bundled). `sharp` is deliberately not a project dependency — the site does not
 with it. The conversion is worth doing: for the five Slibe screens it took the gallery from
 1509 kB of PNG to 161 kB of WebP.
 
+### Company logos
+
+Drop them in `src/assets/companies/` — PNG, JPG, WebP, AVIF or SVG — and point a work
+entry at one with `logo: '<bare filename, no extension>'` in `path.work`. Nothing to
+import.
+
+Logos render on a light tile, so dark and colourful logos both stay visible against the
+dark page. An entry with no logo (or one naming a file that is not there) falls back to a
+monogram of the company's first letter, so the text column stays aligned either way.
+
+### Project logo
+
 The project logo stays a plain PNG at `src/assets/slibe/logoslibe.png` and is picked up
 automatically as `slibeLogo`. Keep it small — a wordmark drawn at 32px does not need to be
 8000px wide, and browsers decode the full bitmap into memory regardless of display size.
