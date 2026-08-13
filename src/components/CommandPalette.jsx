@@ -4,6 +4,9 @@ import { SECTIONS, profile } from '../content.js'
 import { useCopy, useReducedMotion } from '../hooks.js'
 import { MOD, cx } from '../utils.js'
 
+/** Casing the generic key-to-label fallback would get wrong. */
+const LINK_LABELS = { linkedin: 'LinkedIn', github: 'GitHub' }
+
 /**
  * ⌘K palette. Navigates sections, flips language, copies the email,
  * opens external links — all without the visitor touching the mouse.
@@ -59,22 +62,16 @@ export default function CommandPalette({ open, onClose }) {
         hint: 'home',
         run: () => window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }),
       },
-      {
-        id: 'link:github',
+      // Built from whatever `profile.links` holds, so adding or dropping a
+      // profile does not need an edit here too.
+      ...Object.entries(profile.links).map(([key, href]) => ({
+        id: `link:${key}`,
         group: 'links',
         icon: '↗',
-        label: 'GitHub',
-        hint: profile.links.github.replace(/^https?:\/\//, ''),
-        run: () => window.open(profile.links.github, '_blank', 'noopener'),
-      },
-      {
-        id: 'link:linkedin',
-        group: 'links',
-        icon: '↗',
-        label: 'LinkedIn',
-        hint: profile.links.linkedin.replace(/^https?:\/\//, ''),
-        run: () => window.open(profile.links.linkedin, '_blank', 'noopener'),
-      },
+        label: LINK_LABELS[key] ?? key[0].toUpperCase() + key.slice(1),
+        hint: href.replace(/^https?:\/\/(www\.)?/, ''),
+        run: () => window.open(href, '_blank', 'noopener'),
+      })),
       {
         id: 'link:mail',
         group: 'links',

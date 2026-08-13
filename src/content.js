@@ -115,12 +115,13 @@ export const boot = {
 export const profile = {
   name: 'Zejd Delic',
   handle: 'zejd',
-  email: 'you@example.com',
+  email: 'deliczejd123@gmail.com',
   location: 'Bosna i Hercegovina',
   photo: portrait,
+  // Every link here is optional. Remove one and the places that show it — the
+  // contact section, the command palette — drop it without further edits.
   links: {
-    github: 'https://github.com/your-username',
-    linkedin: 'https://linkedin.com/in/your-username',
+    linkedin: 'https://www.linkedin.com/in/zejd-delic-717b12252',
   },
 }
 
@@ -439,13 +440,16 @@ export const content = {
 
     contact: {
       heading: 'contact',
+      command: 'mail zejd',
+      lead: 'There is a solution to every problem. Sometimes it just has to be written.',
       pitch:
-        'Placeholder: say what kind of message is worth sending — a role, a contract, a question about something you wrote. Set expectations on reply time.',
-      emailLabel: 'email',
+        'A project, a role, or an idea that needs saying out loud to someone — any of those is worth an email. I am open to new work, and the conversations I like best are the ones that start with "is this even possible".',
       copy: 'copy',
       copied: 'copied',
-      elsewhere: 'elsewhere',
-      availability: 'Currently open to backend and platform roles.',
+      send: 'send a message',
+      availability: 'Open to new work and collaborations.',
+      responseTime: 'I usually reply within a day or two.',
+      linkedin: 'LinkedIn',
     },
 
     footer: {
@@ -782,13 +786,16 @@ export const content = {
 
     contact: {
       heading: 'kontakt',
+      command: 'mail zejd',
+      lead: 'Za svaki problem postoji rješenje. Nekad ga samo treba napisati.',
       pitch:
-        'Placeholder: reci kakva poruka ima smisla — pozicija, ugovor, pitanje o nečemu što si napisao. Postavi očekivanje za vrijeme odgovora.',
-      emailLabel: 'email',
+        'Projekat, pozicija ili ideja koju treba nekome ispričati naglas — svaka od tih stvari vrijedi jedan mail. Radujem se novim suradnjama, a najdraži su mi razgovori koji počnu s "je li ovo uopšte moguće".',
       copy: 'kopiraj',
       copied: 'kopirano',
-      elsewhere: 'drugdje',
-      availability: 'Trenutno otvoren za backend i platform pozicije.',
+      send: 'pošalji poruku',
+      availability: 'Otvoren za nove suradnje i poslove.',
+      responseTime: 'Odgovaram obično u roku od dan-dva.',
+      linkedin: 'LinkedIn',
     },
 
     footer: {
