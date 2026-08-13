@@ -1,8 +1,25 @@
 import { useInView } from '../hooks.js'
 import { cx } from '../utils.js'
+import Wip from './Wip.jsx'
 
-/** Shared section shell: a shell-prompt heading, a note, then the content. */
-export default function Section({ id, index, file, heading, note, children, className }) {
+/**
+ * Shared section shell: a shell-prompt heading, a note, then the content.
+ *
+ * `wip` swaps the content for a placeholder while keeping the heading, note and
+ * anchor, so the section still exists for the nav and the visitor can see what
+ * is coming.
+ */
+export default function Section({
+  id,
+  index,
+  file,
+  heading,
+  note,
+  children,
+  className,
+  wip,
+  wipCopy,
+}) {
   const [ref, inView] = useInView()
 
   return (
@@ -26,7 +43,7 @@ export default function Section({ id, index, file, heading, note, children, clas
 
       {note && <p className="mt-3 max-w-2xl font-sans text-sm text-dim">{note}</p>}
 
-      <div className="mt-10">{children}</div>
+      <div className="mt-10">{wip ? <Wip copy={wipCopy} file={file} /> : children}</div>
     </section>
   )
 }

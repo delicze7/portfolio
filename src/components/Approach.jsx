@@ -1,4 +1,5 @@
 import { useLang } from '../i18n/LanguageContext.jsx'
+import { WIP_SECTIONS } from '../content.js'
 import Section from './Section.jsx'
 
 export default function Approach() {
@@ -11,6 +12,8 @@ export default function Approach() {
       file="approach.md"
       heading={t.approach.heading}
       note={t.approach.note}
+      wip={WIP_SECTIONS.includes('approach')}
+      wipCopy={t.wip}
     >
       <ul className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
         {t.approach.items.map((item, i) => (

@@ -125,6 +125,12 @@ export const profile = {
   },
 }
 
+/**
+ * Sections that are written but not filled in yet. Each keeps its heading,
+ * note and anchor, and shows a placeholder where the content will go.
+ */
+export const WIP_SECTIONS = ['approach', 'stack', 'lab']
+
 export const content = {
   /* ────────────────────────────────────────────────────────────── ENGLISH ── */
   en: {
@@ -266,74 +272,23 @@ export const content = {
       items: [],
     },
 
+    wip: {
+      badge: 'in progress',
+      title: 'This section is still being written.',
+      note: 'I am working on it. I would rather leave it empty for now than fill it with something that is not true.',
+      shell: 'work in progress',
+    },
     approach: {
       heading: 'how i work',
       note: 'Opinions I hold loosely enough to change, strongly enough to act on.',
-      items: [
-        {
-          title: 'Boring technology wins',
-          body: 'Placeholder: your take on choosing proven tools over novel ones, and when you break that rule.',
-        },
-        {
-          title: 'Write it down before you build it',
-          body: 'Placeholder: how you approach design docs, RFCs, or just a paragraph in the ticket.',
-        },
-        {
-          title: 'Observability is a feature',
-          body: 'Placeholder: your view on logging, metrics, and being able to answer "why is it slow" without a redeploy.',
-        },
-        {
-          title: 'Delete more than you add',
-          body: 'Placeholder: your relationship with scope, dead code, and the second system effect.',
-        },
-      ],
+      items: [],
     },
 
     stack: {
       heading: 'stack',
       note: 'Honest labels. "Daily" means I could debug it half-asleep.',
       levels: { daily: 'daily', working: 'working', touched: 'touched' },
-      groups: [
-        {
-          name: 'languages',
-          items: [
-            { name: 'Go', level: 'daily' },
-            { name: 'TypeScript', level: 'daily' },
-            { name: 'Python', level: 'working' },
-            { name: 'Rust', level: 'touched' },
-            { name: 'SQL', level: 'daily' },
-          ],
-        },
-        {
-          name: 'backend',
-          items: [
-            { name: 'PostgreSQL', level: 'daily' },
-            { name: 'Redis', level: 'daily' },
-            { name: 'Kafka', level: 'working' },
-            { name: 'gRPC', level: 'working' },
-            { name: 'GraphQL', level: 'touched' },
-          ],
-        },
-        {
-          name: 'frontend',
-          items: [
-            { name: 'React', level: 'daily' },
-            { name: 'Tailwind', level: 'daily' },
-            { name: 'Vite', level: 'working' },
-            { name: 'Svelte', level: 'touched' },
-          ],
-        },
-        {
-          name: 'infra',
-          items: [
-            { name: 'Docker', level: 'daily' },
-            { name: 'Kubernetes', level: 'working' },
-            { name: 'Terraform', level: 'working' },
-            { name: 'GitHub Actions', level: 'daily' },
-            { name: 'AWS', level: 'working' },
-          ],
-        },
-      ],
+      groups: [],
     },
 
     path: {
@@ -410,32 +365,7 @@ export const content = {
     lab: {
       heading: 'lab',
       note: 'Small things built for no good reason. Usually the most fun.',
-      items: [
-        {
-          name: 'ascii-uptime',
-          desc: 'Placeholder: a weekend tool, a CLI, a shader, a bot.',
-          tag: 'cli',
-          href: '',
-        },
-        {
-          name: 'raycaster.c',
-          desc: 'Placeholder: something you built to understand how it works.',
-          tag: 'graphics',
-          href: '',
-        },
-        {
-          name: 'kv-store',
-          desc: 'Placeholder: an implementation-from-scratch project.',
-          tag: 'systems',
-          href: '',
-        },
-        {
-          name: 'dotfiles',
-          desc: 'Placeholder: your setup, because someone always asks.',
-          tag: 'config',
-          href: '',
-        },
-      ],
+      items: [],
     },
 
     contact: {
@@ -613,74 +543,23 @@ export const content = {
       items: [],
     },
 
+    wip: {
+      badge: 'u pripremi',
+      title: 'Ova sekcija se još piše.',
+      note: 'Radim na njoj. Radije ću je ostaviti praznu nego je popuniti nečim što nije istina.',
+      shell: 'work in progress',
+    },
     approach: {
       heading: 'kako radim',
       note: 'Stavovi koje držim dovoljno labavo da ih promijenim, dovoljno čvrsto da po njima radim.',
-      items: [
-        {
-          title: 'Dosadna tehnologija pobjeđuje',
-          body: 'Placeholder: tvoj stav o biranju provjerenih alata umjesto novih, i kada to pravilo prekršiš.',
-        },
-        {
-          title: 'Napiši prije nego izgradiš',
-          body: 'Placeholder: kako pristupaš design dokumentima, RFC-ovima, ili samo jednom pasusu u tiketu.',
-        },
-        {
-          title: 'Observability je feature',
-          body: 'Placeholder: tvoj pogled na logove, metrike, i mogućnost da odgovoriš "zašto je sporo" bez novog deploya.',
-        },
-        {
-          title: 'Briši više nego što dodaješ',
-          body: 'Placeholder: tvoj odnos prema scope-u, mrtvom kodu i second system efektu.',
-        },
-      ],
+      items: [],
     },
 
     stack: {
       heading: 'stack',
       note: 'Iskrene oznake. "Svaki dan" znači da bih to debugovao polubudan.',
       levels: { daily: 'svaki dan', working: 'radno', touched: 'dodirnuo' },
-      groups: [
-        {
-          name: 'jezici',
-          items: [
-            { name: 'Go', level: 'daily' },
-            { name: 'TypeScript', level: 'daily' },
-            { name: 'Python', level: 'working' },
-            { name: 'Rust', level: 'touched' },
-            { name: 'SQL', level: 'daily' },
-          ],
-        },
-        {
-          name: 'backend',
-          items: [
-            { name: 'PostgreSQL', level: 'daily' },
-            { name: 'Redis', level: 'daily' },
-            { name: 'Kafka', level: 'working' },
-            { name: 'gRPC', level: 'working' },
-            { name: 'GraphQL', level: 'touched' },
-          ],
-        },
-        {
-          name: 'frontend',
-          items: [
-            { name: 'React', level: 'daily' },
-            { name: 'Tailwind', level: 'daily' },
-            { name: 'Vite', level: 'working' },
-            { name: 'Svelte', level: 'touched' },
-          ],
-        },
-        {
-          name: 'infra',
-          items: [
-            { name: 'Docker', level: 'daily' },
-            { name: 'Kubernetes', level: 'working' },
-            { name: 'Terraform', level: 'working' },
-            { name: 'GitHub Actions', level: 'daily' },
-            { name: 'AWS', level: 'working' },
-          ],
-        },
-      ],
+      groups: [],
     },
 
     path: {
@@ -756,32 +635,7 @@ export const content = {
     lab: {
       heading: 'lab',
       note: 'Male stvari napravljene bez dobrog razloga. Obično najzabavnije.',
-      items: [
-        {
-          name: 'ascii-uptime',
-          desc: 'Placeholder: vikend alat, CLI, shader ili bot.',
-          tag: 'cli',
-          href: '',
-        },
-        {
-          name: 'raycaster.c',
-          desc: 'Placeholder: nešto što si napravio da razumiješ kako radi.',
-          tag: 'grafika',
-          href: '',
-        },
-        {
-          name: 'kv-store',
-          desc: 'Placeholder: implementacija nečega od nule.',
-          tag: 'sistemi',
-          href: '',
-        },
-        {
-          name: 'dotfiles',
-          desc: 'Placeholder: tvoj setup, jer neko uvijek pita.',
-          tag: 'config',
-          href: '',
-        },
-      ],
+      items: [],
     },
 
     contact: {

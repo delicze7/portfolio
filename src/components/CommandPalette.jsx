@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLang } from '../i18n/LanguageContext.jsx'
-import { SECTIONS, profile } from '../content.js'
+import { SECTIONS, WIP_SECTIONS, profile } from '../content.js'
 import { useCopy, useReducedMotion } from '../hooks.js'
 import { MOD, cx } from '../utils.js'
 
@@ -34,7 +34,9 @@ export default function CommandPalette({ open, onClose }) {
         group: 'nav',
         icon: String(i + 1).padStart(2, '0'),
         label: t.nav[id],
-        hint: `#${id}`,
+        // Flag unfinished sections here too, so the palette does not send
+        // someone to a placeholder without warning.
+        hint: WIP_SECTIONS.includes(id) ? t.wip.badge : `#${id}`,
         run: go(id),
       })),
       {

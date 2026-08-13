@@ -1,4 +1,5 @@
 import { useLang } from '../i18n/LanguageContext.jsx'
+import { WIP_SECTIONS } from '../content.js'
 import Section from './Section.jsx'
 
 const LEVEL_STYLE = {
@@ -11,7 +12,15 @@ export default function Stack() {
   const { t } = useLang()
 
   return (
-    <Section id="stack" index={3} file="stack.json" heading={t.stack.heading} note={t.stack.note}>
+    <Section
+      id="stack"
+      index={3}
+      file="stack.json"
+      heading={t.stack.heading}
+      note={t.stack.note}
+      wip={WIP_SECTIONS.includes('stack')}
+      wipCopy={t.wip}
+    >
       {/* Legend — the labels only mean something if you explain them. */}
       <ul className="mb-8 flex flex-wrap gap-x-6 gap-y-2 text-xs">
         {Object.entries(t.stack.levels).map(([key, label]) => (

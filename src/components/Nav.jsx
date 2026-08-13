@@ -1,5 +1,5 @@
 import { useLang } from '../i18n/LanguageContext.jsx'
-import { SECTIONS, profile } from '../content.js'
+import { SECTIONS, WIP_SECTIONS, profile } from '../content.js'
 import { useScrollSpy } from '../hooks.js'
 import { MOD, cx } from '../utils.js'
 
@@ -29,6 +29,10 @@ export default function Nav({ onOpenPalette }) {
               >
                 <span className="text-line">{String(i + 1).padStart(2, '0')}_</span>
                 {t.nav[id]}
+                {/* Says a section is unfinished before the click, not after. */}
+                {WIP_SECTIONS.includes(id) && (
+                  <span className="ml-1 align-super text-[8px] text-warn/80">●</span>
+                )}
               </a>
             </li>
           ))}

@@ -1,11 +1,20 @@
 import { useLang } from '../i18n/LanguageContext.jsx'
+import { WIP_SECTIONS } from '../content.js'
 import Section from './Section.jsx'
 
 export default function Lab() {
   const { t } = useLang()
 
   return (
-    <Section id="lab" index={5} file="lab/" heading={t.lab.heading} note={t.lab.note}>
+    <Section
+      id="lab"
+      index={5}
+      file="lab/"
+      heading={t.lab.heading}
+      note={t.lab.note}
+      wip={WIP_SECTIONS.includes('lab')}
+      wipCopy={t.wip}
+    >
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {t.lab.items.map((item) => {
           const Tag = item.href ? 'a' : 'div'
