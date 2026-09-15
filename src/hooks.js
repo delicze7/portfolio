@@ -165,8 +165,15 @@ export function useCopy(resetAfter = 1600) {
   return [copied, copy]
 }
 
-/** Fires once when the element scrolls into view — used to stagger section reveals. */
-export function useInView({ threshold = 0.15, rootMargin = '0px 0px -60px 0px' } = {}) {
+/**
+ * Fires once when the element scrolls into view — used to reveal sections.
+ *
+ * Triggers when the element's top edge crosses a line near the bottom of the
+ * viewport, not when some share of it is visible. A share-based threshold
+ * breaks on tall elements: the work section is over 5000px tall on a phone, so
+ * 15% of it never fits on screen at once, and it stayed invisible for good.
+ */
+export function useInView({ threshold = 0, rootMargin = '0px 0px -12% 0px' } = {}) {
   const ref = useRef(null)
   const [inView, setInView] = useState(false)
 

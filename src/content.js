@@ -195,7 +195,7 @@ export const content = {
 
     work: {
       heading: 'selected work',
-      note: 'One project, told properly. More will follow.',
+      note: 'One project told in full, and more below it.',
       labels: {
         problem: 'problem',
         decision: 'decision',
@@ -502,7 +502,7 @@ export const content = {
 
     work: {
       heading: 'odabrani radovi',
-      note: 'Jedan projekat, ispričan kako treba. Slijede još.',
+      note: 'Jedan projekat ispričan do kraja, i ostali ispod njega.',
       labels: {
         problem: 'problem',
         decision: 'odluka',
