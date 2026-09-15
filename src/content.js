@@ -73,6 +73,22 @@ export const companyLogos = Object.fromEntries(
   ]),
 )
 
+// Screenshots for the projects below the featured one: one folder per project,
+// `src/assets/projects/<id>/`, keyed `<id>/<bare filename>`. Only files directly
+// inside a project folder match, so `original/` subfolders are kept but never
+// bundled.
+const projectModules = import.meta.glob('./assets/projects/*/*.{avif,jpeg,jpg,png,webp}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+export const projectShots = Object.fromEntries(
+  Object.entries(projectModules).map(([path, url]) => [
+    path.replace(/^\.\/assets\/projects\//, '').replace(/\.[^.]+$/, ''),
+    url,
+  ]),
+)
+
 // Press coverage is the same in both languages — the headlines are Bosnian
 // either way — so it lives here instead of being duplicated and drifting.
 const SLIBE_PRESS = [
@@ -197,6 +213,10 @@ export const content = {
         kofi: 'Support on Ko-fi',
         kofiNote:
           'Slibe is free and always has been. Four people run it in their own time and donations pay the server bill.',
+        others: 'other projects',
+        othersDir: 'projects',
+        solution: 'solution',
+        next: 'next',
       },
 
       featured: {
@@ -269,8 +289,41 @@ export const content = {
         links: { live: 'https://www.slibe.online', source: '', kofi: 'https://ko-fi.com/slibeonline' },
       },
 
-      // Future projects go here — they render as cards under the featured one.
-      items: [],
+      // Projects below the featured one. Screenshots live in
+      // src/assets/projects/<id>/ and are named in `shots` by bare filename.
+      items: [
+        {
+          id: 'hocsv',
+          name: 'Konta — HO Kozarac',
+          badge: 'internal tool',
+          year: '2025',
+          context: 'Humanitarna organizacija Kozarac · desktop application',
+          tagline:
+            'A humanitarian organisation publishes every donation and every expense on its website. This desktop tool turns exports from the bank, PayPal and the cash desk into the one file the site imports.',
+          problem:
+            'The organisation keeps its books in public: every donation and every expense is listed on its WordPress site. The figures arrive from three places — the bank, PayPal and the cash desk — each in its own format, and every payment had to be entered separately, by hand. With a monthly turnover in the tens of thousands of KM, that could not last.',
+          solution:
+            'A .NET desktop application I built on my own. Feed it an export from the bank, PayPal or the cash desk and it hands back files in exactly the layout the site import expects — income and expenses split apart, sorted by category and by person.',
+          result:
+            'What used to be entered payment by payment is ready in a few clicks. It is for internal use only and no visitor ever sees it, but it is what keeps the public record current.',
+          next: 'A web platform with sign-in, where every member of the organisation gets a shared dashboard. In progress, alongside everything else.',
+          stack: ['.NET', 'CSV', 'WordPress'],
+          shots: [
+            {
+              file: 'hok-pocetna',
+              label: 'home',
+              caption:
+                'The home screen: shortcuts to PayPal, the website admin and the cash desk, and the membership count of the organisation in one place. The space for the account balance is already there, waiting on the database.',
+            },
+            {
+              file: 'hok-import',
+              label: 'import',
+              caption:
+                'Import: pick the source — bank, PayPal or cash desk — and the account, and the tool splits income from expenses and saves the file the website imports.',
+            },
+          ],
+        },
+      ],
     },
 
     wip: {
@@ -301,6 +354,7 @@ export const content = {
         thesis: 'thesis',
         branchCommand: 'git branch',
         empty: 'Nothing here yet.',
+        project: 'see the project',
       },
 
       // Tabs, in order. A branch with no entries hides itself.
@@ -336,7 +390,8 @@ export const content = {
           period: '01.2025 — present',
           location: '',
           current: true,
-          body: 'I keep the record of incoming payments and run the organisation website and its social accounts. For internal use I built HO CSV Import on my own — a tool for importing and processing CSV data that until then was handled by hand (more detail under projects). The role is semi-voluntary.',
+          body: 'I keep the record of incoming payments and run the organisation website and its social accounts. For internal use I built Konta on my own — a desktop app that turns bank, PayPal and cash-desk exports into the file the website imports, work that until then was done by hand. The role is semi-voluntary.',
+          project: { id: 'hocsv', name: 'Konta — HO Kozarac' },
           metric: '',
           stack: [],
         },
@@ -465,6 +520,10 @@ export const content = {
         kofi: 'Podrži na Ko-fi',
         kofiNote:
           'Slibe je besplatan i uvijek je bio. Četvero ljudi ga vodi u svoje slobodno vrijeme, a donacije plaćaju server.',
+        others: 'ostali projekti',
+        othersDir: 'projekti',
+        solution: 'rješenje',
+        next: 'dalje',
       },
 
       featured: {
@@ -537,8 +596,41 @@ export const content = {
         links: { live: 'https://www.slibe.online', source: '', kofi: 'https://ko-fi.com/slibeonline' },
       },
 
-      // Budući projekti idu ovdje — renderuju se kao kartice ispod istaknutog.
-      items: [],
+      // Projekti ispod istaknutog. Slike su u src/assets/projects/<id>/ i
+      // navode se u `shots` po golom imenu fajla.
+      items: [
+        {
+          id: 'hocsv',
+          name: 'Konta — HO Kozarac',
+          badge: 'interni alat',
+          year: '2025',
+          context: 'Humanitarna organizacija Kozarac · desktop aplikacija',
+          tagline:
+            'Humanitarna organizacija javno objavljuje svaku donaciju i svaki trošak na svom sajtu. Ovaj alat pretvara izvode iz banke, PayPala i blagajne u jedan fajl koji sajt uvozi.',
+          problem:
+            'Organizacija vodi finansije javno: svaka uplata i svaki trošak objavljeni su na njenom WordPress sajtu. Podaci stižu iz tri izvora — banke, PayPala i blagajne — svaki u svom formatu, i svaka uplata se morala unijeti zasebno, ručno. Uz mjesečni promet od desetina hiljada KM, to nije moglo dugo trajati.',
+          solution:
+            'Desktop aplikacija u .NET-u koju sam napravio sam. Ubaciš izvod iz banke, PayPala ili blagajne, a ona vraća fajlove tačno u obliku koji traži uvoz na sajtu — prihodi i troškovi razdvojeni, razvrstani po kategorijama i osobama.',
+          result:
+            'Ono što se unosilo uplatu po uplatu sad je spremno u par klikova. Alat koristi samo administracija i posjetilac sajta ga nikad ne vidi, ali upravo on drži javnu evidenciju ažurnom.',
+          next: 'Web platforma s prijavom, gdje svaki član organizacije ima zajednički dashboard. U razvoju, uz ostale obaveze.',
+          stack: ['.NET', 'CSV', 'WordPress'],
+          shots: [
+            {
+              file: 'hok-pocetna',
+              label: 'početna',
+              caption:
+                'Početni ekran: prečice do PayPala, administracije sajta i blagajne, i broj članova organizacije na jednom mjestu. Mjesto za stanje računa je već tu — čeka povezivanje s bazom.',
+            },
+            {
+              file: 'hok-import',
+              label: 'uvoz',
+              caption:
+                'Uvoz: izabereš izvor — banka, PayPal ili blagajna — i konto, a alat razdvaja prihode od troškova i spremi fajl koji sajt uvozi.',
+            },
+          ],
+        },
+      ],
     },
 
     wip: {
@@ -569,6 +661,7 @@ export const content = {
         thesis: 'završni rad',
         branchCommand: 'git branch',
         empty: 'Ovdje još nema ništa.',
+        project: 'pogledaj projekat',
       },
 
       // Tabovi, ovim redom. Grana bez unosa se sama sakrije.
@@ -604,7 +697,8 @@ export const content = {
           period: '01.2025 — danas',
           location: '',
           current: true,
-          body: 'Vodim evidenciju uplata, web stranicu organizacije i društvene mreže. Za internu upotrebu sam samostalno razvio HO CSV Import — alat za uvoz i obradu CSV podataka koji su se do tada obrađivali ručno (detaljnije među projektima). Rad je polu-volonterski.',
+          body: 'Vodim evidenciju uplata, web stranicu organizacije i društvene mreže. Za internu upotrebu sam samostalno razvio aplikaciju Konta — alat koji izvode iz banke, PayPala i blagajne pretvara u fajl koji sajt uvozi, posao koji se do tada radio ručno. Rad je polu-volonterski.',
+          project: { id: 'hocsv', name: 'Konta — HO Kozarac' },
           metric: '',
           stack: [],
         },

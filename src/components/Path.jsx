@@ -102,6 +102,17 @@ function WorkLog({ entries, labels }) {
             {entry.body}
           </p>
 
+          {/* Links a role to the project that came out of it, instead of a line
+              in the text promising it is somewhere else on the page. */}
+          {entry.project && (
+            <a
+              href={`#project-${entry.project.id}`}
+              className="mt-2 inline-block text-sm text-acc transition-opacity hover:opacity-75"
+            >
+              <span className="text-line">→</span> {labels.project}: {entry.project.name}
+            </a>
+          )}
+
           {/* The number, if there is one, gets its own line so it is not buried. */}
           {entry.metric && (
             <p className="mt-2 text-sm text-acc">

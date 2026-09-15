@@ -30,8 +30,9 @@ There is deliberately **no CV download** — the page is the CV.
 ### Featured project
 
 `work.featured` renders as a full case study (metrics, screenshot gallery, growth chart,
-press links) above the regular project grid; `work.items` holds ordinary projects and is
-empty for now. Press coverage is shared between languages in the `SLIBE_PRESS` const at the
+press links). `work.items` renders below it under "other projects", one card per project
+with everything visible at once — tagline, problem / solution / result, an optional `next`
+line, stack and screenshots. Press coverage is shared between languages in the `SLIBE_PRESS` const at the
 top of `content.js`, since the headlines are Bosnian either way.
 
 Screenshots go in `src/assets/slibe/`. Each entry in `work.featured.shots` names one by
@@ -54,6 +55,22 @@ to `src/assets/slibe/original/` (outside the import globs, so they are kept but 
 bundled). `sharp` is deliberately not a project dependency — the site does not build or run
 with it. The conversion is worth doing: for the five Slibe screens it took the gallery from
 1509 kB of PNG to 161 kB of WebP.
+
+### Other projects
+
+Each project in `work.items` gets a folder, `src/assets/projects/<id>/`, and names its
+screenshots in `shots` by bare filename. These are desktop screens, so the card shows them
+side by side at half its width and opens them in the lightbox's wide layout. Convert them
+without thumbnails — at that size a 400px thumbnail would be blurry:
+
+```bash
+npm i -D sharp
+node scripts/optimize-images.mjs src/assets/projects/<id> --no-thumbs
+npm uninstall sharp
+```
+
+A work-history entry can point at a project with `project: { id, name }`, which renders a
+link that scrolls to that project's card.
 
 ### Company logos
 

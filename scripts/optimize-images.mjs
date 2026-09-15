@@ -1,33 +1,46 @@
 /**
- * Turns raw screenshot exports into what the site actually ships:
- * a 1000px WebP for the lightbox and a 400px WebP thumbnail for the grid.
+ * Turns raw screenshot exports into what the site actually ships: a 1000px WebP
+ * for each, and a 400px WebP thumbnail unless told otherwise.
+ *
+ *   node scripts/optimize-images.mjs                                   # src/assets/slibe, with thumbnails
+ *   node scripts/optimize-images.mjs src/assets/projects/<id> --no-thumbs
+ *
+ * The featured project's phone strip draws ~195px thumbnails, so it wants them.
+ * Other projects show desktop screens at half the card's width, where a 400px
+ * thumbnail would be blurry — they use the 1000px file directly.
  *
  * `sharp` is not a project dependency — the site neither builds nor runs with
  * it. Install it only when you have new screenshots to process:
  *
  *   npm i -D sharp
- *   node scripts/optimize-images.mjs
+ *   node scripts/optimize-images.mjs ...
  *   npm uninstall sharp
  *
- * Drop the raw PNG/JPG exports in `src/assets/slibe/`. Originals are moved to
- * `src/assets/slibe/original/` afterwards, which sits outside the import globs
- * in `src/content.js`, so nothing is lost and nothing extra is bundled.
+ * Originals are moved to `<folder>/original/`, which sits outside the import
+ * globs in `src/content.js`, so nothing is lost and nothing extra is bundled.
  */
 import fs from 'node:fs'
 import path from 'node:path'
 import sharp from 'sharp'
 
-const SRC = 'src/assets/slibe'
+const args = process.argv.slice(2)
+const SRC = args.find((a) => !a.startsWith('--')) ?? 'src/assets/slibe'
+const WITH_THUMBS = !args.includes('--no-thumbs')
 const ORIGINAL = path.join(SRC, 'original')
 const THUMBS = path.join(SRC, 'thumbs')
 
 const FULL_WIDTH = 1000
 const THUMB_WIDTH = 400
 
-fs.mkdirSync(ORIGINAL, { recursive: true })
-fs.mkdirSync(THUMBS, { recursive: true })
+if (!fs.existsSync(SRC)) {
+  console.error(`No such folder: ${SRC}`)
+  process.exit(1)
+}
 
-// Everything except the logo, which is a tiny wordmark and stays as a PNG.
+fs.mkdirSync(ORIGINAL, { recursive: true })
+if (WITH_THUMBS) fs.mkdirSync(THUMBS, { recursive: true })
+
+// Everything except logos, which are tiny wordmarks and stay as they are.
 const files = fs
   .readdirSync(SRC)
   .filter((f) => /\.(png|jpe?g)$/i.test(f) && !/^logo/i.test(f))
@@ -37,9 +50,10 @@ if (files.length === 0) {
   process.exit(0)
 }
 
+const kb = (n) => `${(n / 1024).toFixed(0)} kB`
 let before = 0
-let thumbTotal = 0
 let fullTotal = 0
+let thumbTotal = 0
 
 for (const file of files) {
   const from = path.join(SRC, file)
@@ -51,21 +65,23 @@ for (const file of files) {
     .resize({ width: FULL_WIDTH, withoutEnlargement: true })
     .webp({ quality: 82, effort: 6 })
     .toBuffer()
-  const thumb = await sharp(input)
-    .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
-    .webp({ quality: 80, effort: 6 })
-    .toBuffer()
-
   fs.writeFileSync(path.join(SRC, `${base}.webp`), full)
-  fs.writeFileSync(path.join(THUMBS, `${base}.webp`), thumb)
-  fs.renameSync(from, path.join(ORIGINAL, file))
-
   fullTotal += full.length
-  thumbTotal += thumb.length
-  const kb = (n) => `${(n / 1024).toFixed(0)} kB`
-  console.log(`${base.padEnd(20)} ${kb(input.length).padStart(8)} -> full ${kb(full.length)}, thumb ${kb(thumb.length)}`)
+
+  let note = ''
+  if (WITH_THUMBS) {
+    const thumb = await sharp(input)
+      .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
+      .webp({ quality: 80, effort: 6 })
+      .toBuffer()
+    fs.writeFileSync(path.join(THUMBS, `${base}.webp`), thumb)
+    thumbTotal += thumb.length
+    note = `, thumb ${kb(thumb.length)}`
+  }
+
+  fs.renameSync(from, path.join(ORIGINAL, file))
+  console.log(`${base.padEnd(20)} ${kb(input.length).padStart(8)} -> full ${kb(full.length)}${note}`)
 }
 
-const kb = (n) => `${(n / 1024).toFixed(0)} kB`
-console.log(`\ngallery grid: ${kb(before)} -> ${kb(thumbTotal)}`)
-console.log(`lightbox, per image opened: ~${kb(fullTotal / files.length)}`)
+console.log(`\n${SRC}: ${kb(before)} of raw exports -> ${kb(fullTotal)} of WebP`)
+if (WITH_THUMBS) console.log(`thumbnails: ${kb(thumbTotal)}`)
