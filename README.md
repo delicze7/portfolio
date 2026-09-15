@@ -14,7 +14,7 @@ npm run preview
 **Everything you need to change lives in [`src/content.js`](src/content.js).** No component
 touches hardcoded copy.
 
-- `profile` — name, email, location, links (GitHub, LinkedIn, CV path).
+- `profile` — name, email, location, the hero photo, links (LinkedIn).
 - `content.en` / `content.bs` — all text, in both languages.
 
 The two language objects must keep the **same arrays in the same order** — the UI matches
@@ -61,9 +61,10 @@ Drop them in `src/assets/companies/` — PNG, JPG, WebP, AVIF or SVG — and poi
 entry at one with `logo: '<bare filename, no extension>'` in `path.work`. Nothing to
 import.
 
-Logos render on a light tile, so dark and colourful logos both stay visible against the
-dark page. An entry with no logo (or one naming a file that is not there) falls back to a
-monogram of the company's first letter, so the text column stays aligned either way.
+Every logo renders as a white silhouette (`brightness(0) invert(1)`), so dark and
+colourful logos both read on the dark page and match each other. They sit in a shared box
+rather than at a shared height, so a square mark is not dwarfed by a wide wordmark. An
+entry with no logo can set `mark` instead — freelance uses the site's own `>` glyph.
 
 ### Project logo
 
@@ -71,26 +72,37 @@ The project logo stays a plain PNG at `src/assets/slibe/logoslibe.png` and is pi
 automatically as `slibeLogo`. Keep it small — a wordmark drawn at 32px does not need to be
 8000px wide, and browsers decode the full bitmap into memory regardless of display size.
 
-### Portrait
+### Hero photo
 
-Save your photo as `src/assets/portrait.jpg` (`.jpeg`, `.png`, `.webp` and `.avif` also
-work). No import to edit — `src/content.js` globs `portrait.*` and the extensions are
-ordered so a `portrait.jpg` you add takes over from the placeholder `portrait.png`
-automatically. Portrait orientation, ideally 3:4 or taller. It is imported rather than
-served from `public/` so the build fingerprints it and relative-base hosting keeps working.
+The photo is `src/assets/hero.webp` — a quality-80 WebP (59 kB) made from the original,
+which is kept at `src/assets/original/hero.jpg` (101 kB) outside the import glob.
+`src/content.js` globs `hero.*` in avif, webp, jpg, jpeg or png and takes the
+smallest-to-ship format present, so there is no import to edit; with no file at all the
+hero renders as text only. Square is ideal: the character grid and the matte are laid over
+the photo cell for cell.
 
-The photo renders as ASCII art and cross-fades to the real image on hover, focus or tap.
-Two things make that survive an arbitrary photo:
+The face sits against the right edge and dissolves into the page through characters.
+[`src/lib/asciiField.js`](src/lib/asciiField.js) measures the photo once and produces both
+the ASCII and a matte for the photo, and
+[`src/components/HeroVisual.jsx`](src/components/HeroVisual.jsx) lays one over the other.
+The matte follows the subject's contour row by row, so the photo shows the head and none of
+the backdrop — a radial mask cannot tell the two apart and left a bright grey disc around
+the face — and a horizontal fade hands the back of the head and the shoulder over to the
+characters. On load the characters scramble into place and the
+photo surfaces through them; afterwards a few glyphs keep flickering, paused while the hero
+is off screen. `prefers-reduced-motion` gets the finished frame with no motion at all.
 
-- **Contrast normalisation** to the 2nd–98th percentile, so exposure barely matters.
-- **Auto-invert** — if the frame's edges are brighter than its middle (a dark subject shot
-  against a bright room), the ramp flips so the subject renders dense instead of hollow.
-  Force it either way with `invert={true}` / `invert={false}` on `<Portrait>`.
+The ASCII is deliberately not brightness-based. A studio backdrop is bright, and
+brightness ASCII renders it as a wall of glyphs that swallows the subject. Density follows
+how far each cell departs from the backdrop's tone, plus its edge detail, so hair, beard
+and fabric become characters while the backdrop stays blank. Left of the head, sparse
+glyphs trail off into the dark — that trail is the dissolve.
 
-Framing is `object-cover` at `50% 25%`, which favours the head. Pass a different
-`objectPosition` if your crop sits elsewhere. To drop the ASCII effect entirely, render a
-plain `<img>` instead of `<Portrait>` in
-[`src/components/Hero.jsx`](src/components/Hero.jsx).
+All of this assumes the current framing: subject against the right edge, backdrop on the
+left. The backdrop is learned from the left 18% of the frame (`backdropWidth` in
+`analyse`), the photo fades in between 57% and 73% of the width (`fadeFrom` / `fadeTo` in
+`buildMatte`), and the character mask is centred on `FOCUS` in `HeroVisual.jsx`. A photo
+framed differently needs those moved.
 
 ## Sections
 
@@ -111,15 +123,15 @@ palette all read from that array.
 ## Details worth knowing
 
 - **`Ctrl/⌘ + K`** opens the command palette — navigation, language switch, copy email,
-  open CV. Arrow keys and Enter work; Escape closes.
+  LinkedIn. Arrow keys and Enter work; Escape closes.
 - **The hero types itself out** as two commands in sequence — `whoami` prints the intro,
-  then `cat profile.txt` opens the panel under the photo.
+  then `cat profile.txt` prints the facts beneath it.
 - **The fact values keep rewriting themselves.** Labels (`location`, `focus`, `experience`)
   are fixed; the values type, hold, erase and type again on a loop, staggered so only one
   line is usually moving. Give a fact several values in `content.js` and it cycles through
-  them — `focus` does this. Timings live in the `Fact` component and `FACT_STAGGER` at the
-  top of [`src/components/Hero.jsx`](src/components/Hero.jsx); to freeze the values, pass
-  `active={false}` to `<Fact>`.
+  them — `focus` does this. Timings live in the `FactLine` component and `FACT_STAGGER` at
+  the top of [`src/components/Hero.jsx`](src/components/Hero.jsx); to freeze the values,
+  pass `active={false}` to `<FactLine>`.
 - **The intro screen is English only** and lives in the top-level `boot` export in
   `src/content.js`, outside `content.en` / `content.bs`. It plays before the visitor has
   chosen a language, so there is nothing to translate it against. Its timings are the

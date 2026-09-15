@@ -8,17 +8,21 @@
  * arrays in the same order — items are matched positionally by the UI.
  */
 
-// Drop your photo into `src/assets/` named `portrait.<ext>` and it is picked up
-// automatically — no import to edit. Matches are ordered by extension, so adding
-// `portrait.jpg` next to the placeholder `portrait.png` takes over on its own.
-// Imported rather than served from /public so the build fingerprints it and the
-// relative `base` in vite.config.js keeps working on subdirectory hosting.
-const portraits = import.meta.glob('./assets/portrait.{avif,jpeg,jpg,png,webp}', {
+// The hero photo. Save it as `src/assets/hero.<ext>` — jpg, png, webp or avif —
+// and it is picked up with no import to edit. Until it exists the hero renders
+// text only. Imported rather than served from /public so the build
+// fingerprints it and the relative `base` in vite.config.js keeps working on
+// subdirectory hosting.
+const heroPhotos = import.meta.glob('./assets/hero.{avif,jpeg,jpg,png,webp}', {
   eager: true,
   query: '?url',
   import: 'default',
 })
-const portrait = Object.values(portraits)[0]
+// If more than one format is present, take the one that is smallest to ship.
+// Glob keys sort alphabetically, which would pick a .jpg over a .webp.
+const heroPhoto = ['avif', 'webp', 'jpg', 'jpeg', 'png']
+  .map((ext) => heroPhotos[`./assets/hero.${ext}`])
+  .find(Boolean)
 
 // Screenshots for the featured project. Drop image files into
 // `src/assets/slibe/` and reference them by bare filename (no extension) from
@@ -55,8 +59,8 @@ export const slibeLogo = slibeShots.logoslibe
 
 // Company logos for the work history. Drop files in `src/assets/companies/`
 // and point a work entry at one with `logo: '<bare filename>'`. Any logo works,
-// including dark ones — they render on a light tile. An entry without a logo
-// falls back to a monogram, so the column stays aligned either way.
+// whatever its colour — each renders as a white silhouette. An entry without a
+// logo can set `mark` instead, or show nothing on that side.
 const companyModules = import.meta.glob('./assets/companies/*.{avif,jpeg,jpg,png,svg,webp}', {
   eager: true,
   query: '?url',
@@ -117,7 +121,7 @@ export const profile = {
   handle: 'zejd',
   email: 'deliczejd123@gmail.com',
   location: 'Bosna i Hercegovina',
-  photo: portrait,
+  hero: heroPhoto,
   // Every link here is optional. Remove one and the places that show it — the
   // contact section, the command palette — drop it without further edits.
   links: {
@@ -170,9 +174,6 @@ export const content = {
       ],
       portrait: {
         alt: 'Portrait of Zejd Delic',
-        caption: 'portrait',
-        photo: 'photo',
-        ascii: 'ascii',
       },
     },
 
@@ -441,9 +442,6 @@ export const content = {
       ],
       portrait: {
         alt: 'Portret — Zejd Delic',
-        caption: 'portret',
-        photo: 'foto',
-        ascii: 'ascii',
       },
     },
 

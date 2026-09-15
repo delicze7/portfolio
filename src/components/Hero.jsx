@@ -1,31 +1,25 @@
 import { useLang } from '../i18n/LanguageContext.jsx'
 import { profile } from '../content.js'
 import { useTyped, useTypewriterCycle } from '../hooks.js'
-import { MOD } from '../utils.js'
-import Portrait from './Portrait.jsx'
+import { MOD, cx } from '../utils.js'
+import HeroVisual from './HeroVisual.jsx'
 
 /** Offset between fact lines so they don't all animate at once. */
 const FACT_STAGGER = 1700
+const SEP = '  ·  '
 
-function Prompt({ children, caret, bare }) {
+function Prompt({ children, caret }) {
   return (
-    <p className={bare ? 'text-[11px]' : 'text-sm sm:text-base'}>
-      {bare ? (
-        <span className="text-acc">$</span>
-      ) : (
-        <>
-          <span className="text-acc">{profile.handle}@portfolio</span>
-          <span className="text-dim">:~$</span>
-        </>
-      )}{' '}
-      <span className={bare ? 'text-dim' : 'text-fg'}>{children}</span>
+    <p className="text-sm sm:text-base">
+      <span className="text-acc">{profile.handle}@portfolio</span>
+      <span className="text-dim">:~$</span> <span className="text-fg">{children}</span>
       {caret && <span className="caret" />}
     </p>
   )
 }
 
-/** One `label / value` row. The label is fixed; the value keeps rewriting itself. */
-function Fact({ label, values, active, delay }) {
+/** `label · value`, printed like program output. The label is fixed; the value keeps rewriting itself. */
+function FactLine({ label, width, values, active, delay }) {
   const { text, phase } = useTypewriterCycle(values, {
     active,
     delay,
@@ -35,10 +29,11 @@ function Fact({ label, values, active, delay }) {
   })
 
   return (
-    <div className="py-2.5">
-      <dt className="text-[10px] tracking-[0.14em] text-dim/70 uppercase">{label}</dt>
-      <dd className="mt-1 min-h-[1.4em] text-sm text-fg/90">
-        {text}
+    <div className="whitespace-pre">
+      <dt className="inline text-dim">{label.padEnd(width)}</dt>
+      <dd className="inline">
+        <span className="text-line">{SEP}</span>
+        <span className="text-fg/90">{text}</span>
         {phase !== 'holding' && <span className="caret" />}
       </dd>
     </div>
@@ -49,7 +44,7 @@ export default function Hero({ ready }) {
   const { t } = useLang()
 
   // Two commands in sequence: `whoami` prints the intro, then `cat profile.txt`
-  // opens the panel under the photo.
+  // prints the facts.
   const [cmd1, cmd1Done] = useTyped(t.hero.command, { speed: 65, delay: 300, active: ready })
   const [cmd2, cmd2Done] = useTyped(t.hero.commandProfile, {
     speed: 45,
@@ -57,108 +52,98 @@ export default function Hero({ ready }) {
     active: cmd1Done,
   })
 
+  const labelWidth = Math.max(...t.hero.facts.map((f) => f.k.length))
+  const hasPhoto = Boolean(profile.hero)
+
   return (
-    <section id="top" className="relative flex min-h-screen items-center px-5 pt-24 pb-16 sm:px-8">
-      <div className="mx-auto w-full max-w-4xl">
-        <div className="scanlines relative overflow-hidden rounded-lg border border-line bg-panel shadow-2xl shadow-black/50">
-          <div className="flex items-center gap-2 border-b border-line bg-raised/60 px-4 py-2.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-            <span className="mx-auto text-[11px] text-dim">
-              {profile.handle}@portfolio — ~/about
-            </span>
-          </div>
+    <section id="top" className="relative flex min-h-svh flex-col overflow-hidden lg:justify-center">
+      {hasPhoto && <HeroVisual src={profile.hero} alt={t.hero.portrait.alt} ready={ready} />}
 
-          <div className="px-5 py-7 sm:px-8 sm:py-10">
-            <Prompt caret={!cmd1Done}>{cmd1}</Prompt>
+      {/* Small screens: the copy starts just above the photo's faded bottom
+          edge. Wide screens: it sits in the dark left half, clear of the face. */}
+      <div
+        className={cx(
+          'relative z-10 mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8',
+          hasPhoto ? 'pt-[86vw] lg:pt-24' : 'pt-28',
+        )}
+      >
+        <div className="max-w-xl">
+          <Prompt caret={!cmd1Done}>{cmd1}</Prompt>
 
-            {cmd1Done && (
-              <div className="mt-7 flex animate-rise flex-col gap-10 sm:flex-row sm:items-start sm:gap-10">
-                {/* Left: who you are and where to go next. */}
-                <div className="order-2 min-w-0 flex-1 sm:order-1">
-                  <h1 className="text-3xl font-bold tracking-tight text-fg text-glow sm:text-5xl">
-                    {profile.name}
-                  </h1>
-                  <p className="mt-2 text-base text-acc sm:text-lg">{t.hero.role}</p>
-                  <p className="mt-5 font-sans text-lg leading-relaxed text-fg/90 sm:text-xl">
-                    {t.hero.tagline}
-                  </p>
-                  <p className="mt-3 font-sans text-sm leading-relaxed text-dim sm:text-base">
-                    {t.hero.description}
-                  </p>
+          {cmd1Done && (
+            <div className="mt-6 animate-rise">
+              <h1 className="text-4xl font-bold tracking-tight text-fg sm:text-6xl lg:text-7xl">
+                {profile.name}
+              </h1>
+              <p className="mt-3 text-base text-acc sm:text-lg">{t.hero.role}</p>
+              <p className="mt-6 font-sans text-lg leading-relaxed text-fg/90 sm:text-xl">
+                {t.hero.tagline}
+              </p>
+              <p className="mt-3 font-sans text-sm leading-relaxed text-dim sm:text-base">
+                {t.hero.description}
+              </p>
+            </div>
+          )}
 
-                  {cmd2Done && (
-                    <div className="mt-8 flex animate-rise flex-wrap items-center gap-3">
-                      {t.hero.ctas.map((cta, i) => (
-                        <a
-                          key={cta.href}
-                          href={cta.href}
-                          className={
-                            i === 0
-                              ? 'rounded border border-acc/60 bg-acc/10 px-4 py-2 text-sm text-acc transition-colors hover:bg-acc/20'
-                              : 'rounded border border-line px-4 py-2 text-sm text-dim transition-colors hover:border-fg/40 hover:text-fg'
-                          }
-                        >
-                          ./{cta.label}
-                        </a>
-                      ))}
+          {cmd1Done && (
+            <div className="mt-9">
+              <Prompt caret={!cmd2Done}>{cmd2}</Prompt>
+              {cmd2Done && (
+                <dl className="mt-3 animate-rise space-y-1 text-xs sm:text-sm">
+                  {t.hero.facts.map((fact, i) => (
+                    <FactLine
+                      key={fact.k}
+                      label={fact.k}
+                      width={labelWidth}
+                      values={fact.v}
+                      active={cmd2Done}
+                      delay={i * FACT_STAGGER}
+                    />
+                  ))}
+                </dl>
+              )}
+            </div>
+          )}
 
-                      <span className="flex items-center gap-2 pl-1 text-xs text-dim">
-                        <span className="relative flex h-2 w-2">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-acc opacity-60" />
-                          <span className="relative inline-flex h-2 w-2 rounded-full bg-acc" />
-                        </span>
-                        {t.hero.status}
-                      </span>
-                    </div>
-                  )}
-                </div>
+          {cmd2Done && (
+            <div className="animate-rise">
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                {t.hero.ctas.map((cta, i) => (
+                  <a
+                    key={cta.href}
+                    href={cta.href}
+                    className={
+                      i === 0
+                        ? 'rounded border border-acc/60 bg-acc/10 px-4 py-2 text-sm text-acc transition-colors hover:bg-acc/20'
+                        : 'rounded border border-line bg-ink/60 px-4 py-2 text-sm text-dim transition-colors hover:border-fg/40 hover:text-fg'
+                    }
+                  >
+                    ./{cta.label}
+                  </a>
+                ))}
 
-                {/* Right: the photo, with the profile panel stacked underneath it. */}
-                <aside className="order-1 mx-auto w-full max-w-[15rem] shrink-0 sm:order-2 sm:mx-0 sm:w-60 sm:max-w-none">
-                  <Portrait
-                    src={profile.photo}
-                    alt={t.hero.portrait.alt}
-                    caption={t.hero.portrait.caption}
-                    labels={t.hero.portrait}
-                  />
-
-                  <div className="mt-6">
-                    <Prompt bare caret={!cmd2Done}>
-                      {cmd2}
-                    </Prompt>
-
-                    {cmd2Done && (
-                      <dl className="mt-3 animate-rise divide-y divide-line border-y border-line">
-                        {t.hero.facts.map((fact, i) => (
-                          <Fact
-                            key={fact.k}
-                            label={fact.k}
-                            values={fact.v}
-                            active={cmd2Done}
-                            delay={i * FACT_STAGGER}
-                          />
-                        ))}
-                      </dl>
-                    )}
-                  </div>
-                </aside>
+                <span className="flex items-center gap-2 pl-1 text-xs text-dim">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-acc opacity-60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-acc" />
+                  </span>
+                  {t.hero.status}
+                </span>
               </div>
-            )}
-          </div>
-        </div>
 
-        <p className="mt-5 text-center text-xs text-dim/70">
-          <kbd className="rounded border border-line bg-raised px-1.5 py-0.5 text-[10px] text-fg/70">
-            {MOD}
-          </kbd>{' '}
-          +{' '}
-          <kbd className="rounded border border-line bg-raised px-1.5 py-0.5 text-[10px] text-fg/70">
-            K
-          </kbd>{' '}
-          {t.hero.hint}
-        </p>
+              <p className="mt-6 text-xs text-dim/70">
+                <kbd className="rounded border border-line bg-raised px-1.5 py-0.5 text-[10px] text-fg/70">
+                  {MOD}
+                </kbd>{' '}
+                +{' '}
+                <kbd className="rounded border border-line bg-raised px-1.5 py-0.5 text-[10px] text-fg/70">
+                  K
+                </kbd>{' '}
+                {t.hero.hint}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   )
