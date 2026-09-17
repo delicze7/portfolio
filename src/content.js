@@ -298,8 +298,10 @@ export const content = {
           badge: 'internal tool',
           year: '2025',
           context: 'Humanitarna organizacija Kozarac · desktop application',
-          tagline:
-            'A humanitarian organisation publishes every donation and every expense on its website. This desktop tool turns exports from the bank, PayPal and the cash desk into the one file the site imports.',
+          // 'wide' for desktop screenshots, 'phone' for portrait app screens.
+          orientation: 'wide',
+          summary:
+            'Bank, PayPal and cash-desk exports turned into the one file the organisation website imports.',
           problem:
             'The organisation keeps its books in public: every donation and every expense is listed on its WordPress site. The figures arrive from three places — the bank, PayPal and the cash desk — each in its own format, and every payment had to be entered separately, by hand. With a monthly turnover in the tens of thousands of KM, that could not last.',
           solution:
@@ -322,6 +324,23 @@ export const content = {
                 'Import: pick the source — bank, PayPal or cash desk — and the account, and the tool splits income from expenses and saves the file the website imports.',
             },
           ],
+        },
+        {
+          id: 'terminplus',
+          name: 'Termin+',
+          badge: 'prototype',
+          year: '2024 — 2025',
+          context: 'Two-person startup · Flutter · never shipped',
+          orientation: 'phone',
+          summary:
+            'One app for every business that runs on appointments, with a side for the business and a side for the customer.',
+          problem:
+            'Booking an appointment is scattered across whatever each business happens to use — a phone call, an Instagram message, a notebook on the counter. The customer cannot see what is free, and the business loses time arranging it and to people who never turn up.',
+          solution:
+            'Termin+ was designed as one place for all of them: a customer side that finds a business and books a slot, and a business side that keeps its own calendar, services and hours. Two of us built it in Flutter, with the work split evenly.',
+          result:
+            'The project went through a startup development programme. After working through the market and what it actually asks for, we concluded there was no point going further and stopped before production. What is left is the design, and a decision I would make the same way again.',
+          stack: ['Flutter'],
         },
       ],
     },
@@ -605,8 +624,10 @@ export const content = {
           badge: 'interni alat',
           year: '2025',
           context: 'Humanitarna organizacija Kozarac · desktop aplikacija',
-          tagline:
-            'Humanitarna organizacija javno objavljuje svaku donaciju i svaki trošak na svom sajtu. Ovaj alat pretvara izvode iz banke, PayPala i blagajne u jedan fajl koji sajt uvozi.',
+          // 'wide' za desktop snimke, 'phone' za uspravne ekrane aplikacije.
+          orientation: 'wide',
+          summary:
+            'Izvodi iz banke, PayPala i blagajne pretvoreni u jedan fajl koji sajt organizacije uvozi.',
           problem:
             'Organizacija vodi finansije javno: svaka uplata i svaki trošak objavljeni su na njenom WordPress sajtu. Podaci stižu iz tri izvora — banke, PayPala i blagajne — svaki u svom formatu, i svaka uplata se morala unijeti zasebno, ručno. Uz mjesečni promet od desetina hiljada KM, to nije moglo dugo trajati.',
           solution:
@@ -629,6 +650,23 @@ export const content = {
                 'Uvoz: izabereš izvor — banka, PayPal ili blagajna — i konto, a alat razdvaja prihode od troškova i spremi fajl koji sajt uvozi.',
             },
           ],
+        },
+        {
+          id: 'terminplus',
+          name: 'Termin+',
+          badge: 'prototip',
+          year: '2024 — 2025',
+          context: 'Startup u dvoje · Flutter · nikad lansiran',
+          orientation: 'phone',
+          summary:
+            'Jedna aplikacija za sve biznise koji žive od termina, sa stranom za biznis i stranom za korisnika.',
+          problem:
+            'Rezervacija termina je razbacana po tome šta ko koristi — telefonski poziv, poruka na Instagramu, sveska na pultu. Korisnik ne vidi šta je slobodno, a biznis gubi vrijeme na dogovaranje i na one koji se ne pojave.',
+          solution:
+            'Termin+ je zamišljen kao jedno mjesto za sve njih: korisnička strana pronalazi biznis i rezerviše termin, a poslovna vodi svoj kalendar, usluge i radno vrijeme. Radili smo ga udvoje u Flutteru, s podjednako podijeljenim poslom.',
+          result:
+            'Projekat je prošao kroz razvojni startup program. Nakon analize tržišta i onoga što ono stvarno traži, zaključili smo da nema smisla ići dalje i zaustavili ga prije produkcije. Ostalo je idejno rješenje — i odluka koju bih ponovo donio isto.',
+          stack: ['Flutter'],
         },
       ],
     },

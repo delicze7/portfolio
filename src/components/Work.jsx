@@ -2,7 +2,7 @@ import { useLang } from '../i18n/LanguageContext.jsx'
 import { slibeShots, slibeThumbs, slibeLogo, projectShots } from '../content.js'
 import Section from './Section.jsx'
 import Featured from './Featured.jsx'
-import ProjectCard from './ProjectCard.jsx'
+import ProjectList from './ProjectList.jsx'
 
 export default function Work() {
   const { t } = useLang()
@@ -28,10 +28,8 @@ export default function Work() {
             <span className="h-px flex-1 bg-line" />
           </div>
 
-          <div className="mt-8 space-y-6">
-            {t.work.items.map((item) => (
-              <ProjectCard key={item.id} project={item} labels={labels} shots={projectShots} />
-            ))}
+          <div className="mt-6">
+            <ProjectList items={t.work.items} labels={labels} shots={projectShots} />
           </div>
         </div>
       )}

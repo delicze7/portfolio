@@ -30,10 +30,18 @@ There is deliberately **no CV download** — the page is the CV.
 ### Featured project
 
 `work.featured` renders as a full case study (metrics, screenshot gallery, growth chart,
-press links). `work.items` renders below it under "other projects", one card per project
-with everything visible at once — tagline, problem / solution / result, an optional `next`
-line, stack and screenshots. Press coverage is shared between languages in the `SLIBE_PRESS` const at the
-top of `content.js`, since the headlines are Bosnian either way.
+press links). `work.items` renders below it under "other projects" as a list of rows: name,
+badge, year, the one-line `summary` and the stack are always visible, and a row opens in
+place for its screenshots, problem / solution / result and an optional `next` line. One is
+open at a time.
+
+Shown in full, each of those adds 1200–1500px to the section on a phone — with three
+projects it ran past 6000px and buried the featured one. As rows the whole section is
+under 4000px. A link to `#project-<id>` opens that row, so the pointer from a work-history
+entry lands on the write-up rather than on a closed heading.
+
+Press coverage is shared between languages in the `SLIBE_PRESS` const at the top of
+`content.js`, since the headlines are Bosnian either way.
 
 Screenshots go in `src/assets/slibe/`. Each entry in `work.featured.shots` names one by
 bare filename with no extension (`file: 'slibealbum1'`), so gallery order is set by the
@@ -59,9 +67,10 @@ with it. The conversion is worth doing: for the five Slibe screens it took the g
 ### Other projects
 
 Each project in `work.items` gets a folder, `src/assets/projects/<id>/`, and names its
-screenshots in `shots` by bare filename. These are desktop screens, so the card shows them
-side by side at half its width and opens them in the lightbox's wide layout. Convert them
-without thumbnails — at that size a 400px thumbnail would be blurry:
+screenshots in `shots` by bare filename. `orientation` decides how they are drawn: `'wide'`
+puts desktop screens two to a row and opens them in the lightbox's wide layout, `'phone'`
+puts portrait app screens in a strip that scrolls sideways. Convert them without
+thumbnails — at the size they are drawn a 400px thumbnail would be blurry:
 
 ```bash
 npm i -D sharp
