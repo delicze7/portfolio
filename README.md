@@ -78,8 +78,11 @@ node scripts/optimize-images.mjs src/assets/projects/<id> --no-thumbs
 npm uninstall sharp
 ```
 
+`shotsNote` prints a line under the screens — use it when they are a design rather than
+captures of a running product, so nobody reads a mockup as a shipped app.
+
 A work-history entry can point at a project with `project: { id, name }`, which renders a
-link that scrolls to that project's card.
+link that scrolls to that project's row and opens it.
 
 ### Company logos
 

@@ -341,6 +341,52 @@ export const content = {
           result:
             'The project went through a startup development programme. After working through the market and what it actually asks for, we concluded there was no point going further and stopped before production. What is left is the design, and a decision I would make the same way again.',
           stack: ['Flutter'],
+          shotsNote: 'These screens are the design, not captures from a running product.',
+          // Ordered as the story runs: the way in, the customer side, then the
+          // business side. Not the order the files happen to sort in.
+          shots: [
+            {
+              file: 'login',
+              label: 'sign-in',
+              caption:
+                'The way in, under the line the whole app was built around: "Termin zakaži, brigu otkaži" — book the appointment, cancel the worry. You can also carry on without signing in.',
+            },
+            {
+              file: 'pocetna-korisnik',
+              label: 'discover',
+              caption:
+                'The customer side: pick a city, search, and filter by trade — barbers, beauty, dentists. Every business carries its rating and a button that starts a booking.',
+            },
+            {
+              file: 'termini-korisnik',
+              label: 'appointments',
+              caption:
+                'Appointments on the customer side, current and past. The card carries the business, the staff member, the service, the time, the date and the price.',
+            },
+            {
+              file: 'postavke-korisnik',
+              label: 'profile',
+              caption: 'The customer profile: name, email and phone number.',
+            },
+            {
+              file: 'pocetna-biznis',
+              label: 'schedule',
+              caption:
+                'The business side, a day at a time: every slot with its start and end, the month and day picked above, the list filtered by employee.',
+            },
+            {
+              file: 'detalji-rezervacije-biznis',
+              label: 'booking',
+              caption:
+                'What the business sees behind a booking — who made it and how to reach them, with the service, the time and the price.',
+            },
+            {
+              file: 'recenzija-biznis',
+              label: 'review',
+              caption:
+                'A review: stars and a comment left on the business, which carry its average and the number of ratings.',
+            },
+          ],
         },
       ],
     },
@@ -667,6 +713,52 @@ export const content = {
           result:
             'Projekat je prošao kroz razvojni startup program. Nakon analize tržišta i onoga što ono stvarno traži, zaključili smo da nema smisla ići dalje i zaustavili ga prije produkcije. Ostalo je idejno rješenje — i odluka koju bih ponovo donio isto.',
           stack: ['Flutter'],
+          shotsNote: 'Ekrani su idejno rješenje, ne snimci iz produkcije.',
+          // Poredani kako ide priča: ulaz, korisnička strana, pa poslovna.
+          // Ne onako kako se fajlovi slučajno sortiraju.
+          shots: [
+            {
+              file: 'login',
+              label: 'prijava',
+              caption:
+                'Ulaz u aplikaciju, ispod rečenice oko koje je sve i građeno: "Termin zakaži, brigu otkaži!". Može se nastaviti i bez prijave.',
+            },
+            {
+              file: 'pocetna-korisnik',
+              label: 'pretraga',
+              caption:
+                'Korisnička strana: biraš grad, pretražuješ i filtriraš po djelatnosti — frizeri, kozmetika, stomatolozi. Uz svaki salon stoji ocjena i dugme koje pokreće rezervaciju.',
+            },
+            {
+              file: 'termini-korisnik',
+              label: 'termini',
+              caption:
+                'Termini na korisničkoj strani, trenutni i prethodni. Na kartici su salon, radnik, usluga, vrijeme, datum i cijena.',
+            },
+            {
+              file: 'postavke-korisnik',
+              label: 'profil',
+              caption: 'Profil korisnika: ime, email i broj telefona.',
+            },
+            {
+              file: 'pocetna-biznis',
+              label: 'raspored',
+              caption:
+                'Poslovna strana, dan po dan: svaki termin sa svojim početkom i krajem, mjesec i dan se biraju gore, a lista se filtrira po zaposlenom.',
+            },
+            {
+              file: 'detalji-rezervacije-biznis',
+              label: 'rezervacija',
+              caption:
+                'Ono što biznis vidi iza rezervacije — ko ju je napravio i kako da ga kontaktira, uz uslugu, vrijeme i cijenu.',
+            },
+            {
+              file: 'recenzija-biznis',
+              label: 'recenzija',
+              caption:
+                'Recenzija: zvjezdice i komentar koji ostaju uz salon i nose njegov prosjek i broj ocjena.',
+            },
+          ],
         },
       ],
     },

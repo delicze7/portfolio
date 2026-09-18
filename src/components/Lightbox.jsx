@@ -124,9 +124,14 @@ export default function Lightbox({ shots, index, onIndex, onClose, closeLabel, w
               </div>
 
               {/* Jump straight to a screen — the thumbnails are already loaded. */}
-              <ul className="mt-4 flex gap-2">
+              {/* Scrolls rather than shrinking: seven portrait thumbnails
+                  squeezed into one row come out too small to tell apart. */}
+              <ul className="mt-4 flex gap-2 overflow-x-auto pb-1">
                 {shots.map((other, i) => (
-                  <li key={other.file} className={cx('min-w-0 flex-1', wide && 'max-w-[9rem]')}>
+                  <li
+                    key={other.file}
+                    className={cx('min-w-[3rem] flex-1', wide && 'max-w-[9rem]')}
+                  >
                     <button
                       type="button"
                       onClick={() => onIndex(i)}
