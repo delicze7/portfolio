@@ -27,18 +27,22 @@ To drop the Bosnian version entirely: delete the `bs` block, remove the toggle i
 
 There is deliberately **no CV download** — the page is the CV.
 
-### Featured project
+### Projects
 
-`work.featured` renders as a full case study (metrics, screenshot gallery, growth chart,
-press links). `work.items` renders below it under "other projects" as a list of rows: name,
-badge, year, the one-line `summary` and the stack are always visible, and a row opens in
-place for its screenshots, problem / solution / result and an optional `next` line. One is
-open at a time.
+Every project is a row in one list — `work.featured` first, then `work.items`, assembled in
+[`src/components/Work.jsx`](src/components/Work.jsx). Closed, a row carries what someone
+decides on at a glance: the name, whether it is `live`, the year, the one-line `summary`,
+the headline `metrics` and the stack. Opening it reveals the role, the screens, the
+write-up, the growth chart, the press links and the Ko-fi block — whichever of those that
+project has. One row is open at a time.
 
-Shown in full, each of those adds 1200–1500px to the section on a phone — with three
-projects it ran past 6000px and buried the featured one. As rows the whole section is
-under 4000px. A link to `#project-<id>` opens that row, so the pointer from a work-history
-entry lands on the write-up rather than on a closed heading.
+The numbers stay visible while closed on purpose: "13.000+ registered users" is the fact
+that earns the click, so it is not something to hide behind it.
+
+Shown in full, the featured project alone ran to 3190px on a phone and the section to
+3988px. As rows the section is 1050px and the page went from 9441px to 6503px. A link to
+`#project-<id>` opens that row, so the pointer from a work-history entry lands on the
+write-up rather than on a closed heading.
 
 Press coverage is shared between languages in the `SLIBE_PRESS` const at the top of
 `content.js`, since the headlines are Bosnian either way.

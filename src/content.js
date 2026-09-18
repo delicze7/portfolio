@@ -195,7 +195,7 @@ export const content = {
 
     work: {
       heading: 'selected work',
-      note: 'One project told in full, and more below it.',
+      note: 'Open a project to see how it was built.',
       labels: {
         problem: 'problem',
         decision: 'decision',
@@ -213,10 +213,9 @@ export const content = {
         kofi: 'Support on Ko-fi',
         kofiNote:
           'Slibe is free and always has been. Four people run it in their own time and donations pay the server bill.',
-        others: 'other projects',
-        othersDir: 'projects',
         solution: 'solution',
         next: 'next',
+        more: 'read more',
       },
 
       featured: {
@@ -235,10 +234,13 @@ export const content = {
           { v: '0 KM', k: 'cost to collectors' },
         ],
 
+        // Months, no dates. The middle figure is the one the Klix article
+        // carries on 19 May; under June it understates the growth rather than
+        // overstating it, which is the safe direction for a claim like this.
         growth: [
-          { when: '6 May 2026', value: 500, display: '500' },
-          { when: '19 May 2026', value: 5000, display: '5.000' },
-          { when: 'August 2026', value: 13000, display: '13.000+' },
+          { when: 'May', value: 500, display: '500' },
+          { when: 'June', value: 5000, display: '5.000' },
+          { when: 'August', value: 13000, display: '13.000+' },
         ],
 
         problem:
@@ -294,7 +296,7 @@ export const content = {
       items: [
         {
           id: 'hocsv',
-          name: 'Konta — HO Kozarac',
+          name: 'Financije HOK',
           badge: 'internal tool',
           year: '2025',
           context: 'Humanitarna organizacija Kozarac · desktop application',
@@ -455,8 +457,8 @@ export const content = {
           period: '01.2025 — present',
           location: '',
           current: true,
-          body: 'I keep the record of incoming payments and run the organisation website and its social accounts. For internal use I built Konta on my own — a desktop app that turns bank, PayPal and cash-desk exports into the file the website imports, work that until then was done by hand. The role is semi-voluntary.',
-          project: { id: 'hocsv', name: 'Konta — HO Kozarac' },
+          body: 'I keep the record of incoming payments and run the organisation website and its social accounts. For internal use I built Financije HOK on my own — a desktop app that turns bank, PayPal and cash-desk exports into the file the website imports, work that until then was done by hand. The role is semi-voluntary.',
+          project: { id: 'hocsv', name: 'Financije HOK' },
           metric: '',
           stack: [],
         },
@@ -567,7 +569,7 @@ export const content = {
 
     work: {
       heading: 'odabrani radovi',
-      note: 'Jedan projekat ispričan do kraja, i ostali ispod njega.',
+      note: 'Otvori projekat da vidiš kako je nastao.',
       labels: {
         problem: 'problem',
         decision: 'odluka',
@@ -585,10 +587,9 @@ export const content = {
         kofi: 'Podrži na Ko-fi',
         kofiNote:
           'Slibe je besplatan i uvijek je bio. Četvero ljudi ga vodi u svoje slobodno vrijeme, a donacije plaćaju server.',
-        others: 'ostali projekti',
-        othersDir: 'projekti',
         solution: 'rješenje',
         next: 'dalje',
+        more: 'pročitaj više',
       },
 
       featured: {
@@ -607,10 +608,13 @@ export const content = {
           { v: '0 KM', k: 'cijena za kolekcionare' },
         ],
 
+        // Mjeseci, bez datuma. Srednja brojka je ona iz Klixovog članka od
+        // 19. maja; pod junom umanjuje rast umjesto da ga uveličava, što je
+        // sigurniji smjer za ovakvu tvrdnju.
         growth: [
-          { when: '6. maj 2026.', value: 500, display: '500' },
-          { when: '19. maj 2026.', value: 5000, display: '5.000' },
-          { when: 'august 2026.', value: 13000, display: '13.000+' },
+          { when: 'maj', value: 500, display: '500' },
+          { when: 'jun', value: 5000, display: '5.000' },
+          { when: 'august', value: 13000, display: '13.000+' },
         ],
 
         problem:
@@ -666,7 +670,7 @@ export const content = {
       items: [
         {
           id: 'hocsv',
-          name: 'Konta — HO Kozarac',
+          name: 'Financije HOK',
           badge: 'interni alat',
           year: '2025',
           context: 'Humanitarna organizacija Kozarac · desktop aplikacija',
@@ -827,8 +831,8 @@ export const content = {
           period: '01.2025 — danas',
           location: '',
           current: true,
-          body: 'Vodim evidenciju uplata, web stranicu organizacije i društvene mreže. Za internu upotrebu sam samostalno razvio aplikaciju Konta — alat koji izvode iz banke, PayPala i blagajne pretvara u fajl koji sajt uvozi, posao koji se do tada radio ručno. Rad je polu-volonterski.',
-          project: { id: 'hocsv', name: 'Konta — HO Kozarac' },
+          body: 'Vodim evidenciju uplata, web stranicu organizacije i društvene mreže. Za internu upotrebu sam samostalno razvio aplikaciju Financije HOK — alat koji izvode iz banke, PayPala i blagajne pretvara u fajl koji sajt uvozi, posao koji se do tada radio ručno. Rad je polu-volonterski.',
+          project: { id: 'hocsv', name: 'Financije HOK' },
           metric: '',
           stack: [],
         },

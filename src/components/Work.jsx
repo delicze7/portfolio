@@ -1,38 +1,42 @@
 import { useLang } from '../i18n/LanguageContext.jsx'
 import { slibeShots, slibeThumbs, slibeLogo, projectShots } from '../content.js'
 import Section from './Section.jsx'
-import Featured from './Featured.jsx'
 import ProjectList from './ProjectList.jsx'
 
 export default function Work() {
   const { t } = useLang()
   const { labels } = t.work
 
+  // One list, the headline project first. Each item carries its own way of
+  // finding screenshots: the featured project keeps its folder and its
+  // thumbnails, the rest live under src/assets/projects/<id>/.
+  const items = [
+    {
+      ...t.work.featured,
+      logo: slibeLogo,
+      live: true,
+      orientation: 'phone',
+      resolve: (file) => ({ src: slibeShots[file], thumb: slibeThumbs[file] ?? slibeShots[file] }),
+    },
+    ...t.work.items.map((item) => ({
+      ...item,
+      // A project gets a wordmark by dropping a file with "logo" in its name
+      // into its own folder — `logo.png`, `logo-financije.png`,
+      // `financije-logo.png`, whichever way round it is written. Nothing to
+      // wire up, and the row goes without if there is none.
+      logo: Object.entries(projectShots).find(
+        ([key]) => key.startsWith(`${item.id}/`) && /logo/i.test(key),
+      )?.[1],
+      resolve: (file) => {
+        const src = projectShots[`${item.id}/${file}`]
+        return { src, thumb: src }
+      },
+    })),
+  ]
+
   return (
     <Section id="work" index={1} file="work.md" heading={t.work.heading} note={t.work.note}>
-      <Featured
-        project={t.work.featured}
-        labels={labels}
-        shotUrls={slibeShots}
-        thumbUrls={slibeThumbs}
-        logo={slibeLogo}
-      />
-
-      {t.work.items.length > 0 && (
-        <div className="mt-16">
-          <p className="text-xs text-dim sm:text-sm">
-            <span className="text-acc">$</span> ls {labels.othersDir}/
-          </p>
-          <div className="mt-3 flex items-baseline gap-4">
-            <h3 className="text-lg font-bold tracking-tight text-fg sm:text-xl">{labels.others}</h3>
-            <span className="h-px flex-1 bg-line" />
-          </div>
-
-          <div className="mt-6">
-            <ProjectList items={t.work.items} labels={labels} shots={projectShots} />
-          </div>
-        </div>
-      )}
+      <ProjectList items={items} labels={labels} />
     </Section>
   )
 }

@@ -40,10 +40,11 @@ if (!fs.existsSync(SRC)) {
 fs.mkdirSync(ORIGINAL, { recursive: true })
 if (WITH_THUMBS) fs.mkdirSync(THUMBS, { recursive: true })
 
-// Everything except logos, which are tiny wordmarks and stay as they are.
+// Everything except logos — they are marks, not screenshots, and get their own
+// treatment. Matched anywhere in the name: logo.png, financije-logo.png.
 const files = fs
   .readdirSync(SRC)
-  .filter((f) => /\.(png|jpe?g)$/i.test(f) && !/^logo/i.test(f))
+  .filter((f) => /\.(png|jpe?g)$/i.test(f) && !/logo/i.test(f))
 
 if (files.length === 0) {
   console.log('Nothing to do — no raw PNG/JPG exports in', SRC)
