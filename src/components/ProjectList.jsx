@@ -142,14 +142,27 @@ function ProjectRow({ project, labels, open, onToggle }) {
                 while a 1:1 emblem comes out 20x20 and disappears. Empty alt —
                 the mark and the name say the same thing, and a screen reader
                 should hear it once. */}
-            {project.logo && (
+            {project.logo ? (
               <img
                 src={project.logo}
                 alt=""
                 className="h-9 w-24 object-contain object-left sm:h-11 sm:w-32"
               />
+            ) : (
+              // No image: set the name as a wordmark, so a row without a logo
+              // still starts where the others do.
+              project.mark && (
+                <span
+                  aria-hidden="true"
+                  className="flex h-9 w-24 items-center text-[10px] font-bold tracking-[0.18em] text-fg/85 uppercase sm:h-11 sm:w-32 sm:text-xs"
+                >
+                  {project.mark}
+                </span>
+              )
             )}
-            {project.logo && <span className="h-6 w-px bg-line sm:h-8" aria-hidden="true" />}
+            {(project.logo || project.mark) && (
+              <span className="h-6 w-px bg-line sm:h-8" aria-hidden="true" />
+            )}
 
             <span className="text-lg font-bold tracking-tight text-fg transition-colors group-hover:text-acc sm:text-xl">
               <span className="text-line">./</span>

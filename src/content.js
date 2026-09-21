@@ -390,6 +390,23 @@ export const content = {
             },
           ],
         },
+        {
+          id: 'gymniversum',
+          name: 'Gymniversum',
+          mark: 'Gymniversum',
+          badge: 'internal project',
+          year: '2023',
+          context: 'Tech Towers · desktop application, built solo',
+          summary:
+            'A gym management system: members, memberships, check-ins, inventory, payments and the reports that come out of them.',
+          problem:
+            'A gym runs on records that are easy to lose track of on paper: who is a member, whose membership has run out, who came in today, what equipment there is, what has been paid. Each of those is simple on its own and a mess together.',
+          solution:
+            'A .NET desktop application over a SQL database, which I built on my own: members and their memberships, check-in at the door, expiry, inventory, payments, and reporting across all of it.',
+          result:
+            'It got as far as talks with a few gyms, and I cannot say whether any of them ever ran it. What it did do is teach me .NET and working with a database properly — the same stack I then spent three years on in production at that company.',
+          stack: ['.NET', 'SQL'],
+        },
       ],
     },
 
@@ -763,6 +780,23 @@ export const content = {
                 'Recenzija: zvjezdice i komentar koji ostaju uz salon i nose njegov prosjek i broj ocjena.',
             },
           ],
+        },
+        {
+          id: 'gymniversum',
+          name: 'Gymniversum',
+          mark: 'Gymniversum',
+          badge: 'interni projekat',
+          year: '2023',
+          context: 'Tech Towers · desktop aplikacija, rađena samostalno',
+          summary:
+            'Sistem za teretane: članovi, članarine, dolasci, inventar, naplata i izvještaji koji iz toga izlaze.',
+          problem:
+            'Teretana živi od evidencije koju je na papiru lako izgubiti iz vida: ko je član, kome je članarina istekla, ko je danas došao, kakav je inventar, šta je plaćeno. Svaka od tih stvari je sama po sebi jednostavna, a zajedno postaju nered.',
+          solution:
+            'Desktop aplikacija u .NET-u nad SQL bazom, koju sam radio sam: članovi i njihove članarine, prijava dolaska, istek, inventar, naplata i izvještaji nad svim tim.',
+          result:
+            'Stiglo se do pregovora s nekoliko teretana i ne mogu reći da je ijedna to zaista pustila u rad. Ono što jeste — na njemu sam naučio .NET i rad s bazom kako treba, isti stack na kojem sam poslije proveo tri godine u produkciji u toj firmi.',
+          stack: ['.NET', 'SQL'],
         },
       ],
     },
