@@ -2,12 +2,14 @@ import { useLang } from '../i18n/LanguageContext.jsx'
 import { WIP_SECTIONS } from '../content.js'
 import Section from './Section.jsx'
 
-const LEVEL_STYLE = {
-  daily: { dot: 'bg-acc', text: 'text-fg' },
-  working: { dot: 'bg-acc2', text: 'text-fg/75' },
-  touched: { dot: 'bg-dim', text: 'text-dim' },
-}
-
+/**
+ * The stack, grouped by where a tool sits rather than by how well I know it.
+ *
+ * There are no levels on purpose. "Daily" and "touched" are claims nobody can
+ * check and everybody inflates, and a bar chart of my own confidence says less
+ * than the projects above it, where the same names appear with a year and a
+ * result attached.
+ */
 export default function Stack() {
   const { t } = useLang()
 
@@ -21,28 +23,22 @@ export default function Stack() {
       wip={WIP_SECTIONS.includes('stack')}
       wipCopy={t.wip}
     >
-      {/* Legend — the labels only mean something if you explain them. */}
-      <ul className="mb-8 flex flex-wrap gap-x-6 gap-y-2 text-xs">
-        {Object.entries(t.stack.levels).map(([key, label]) => (
-          <li key={key} className="flex items-center gap-2 text-dim">
-            <span className={`h-2 w-2 rounded-full ${LEVEL_STYLE[key].dot}`} />
-            {label}
-          </li>
-        ))}
-      </ul>
-
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {/* items-start: the groups are different lengths, and a three-item card
+          stretched to match an eight-item one is mostly empty box. */}
+      <div className="grid grid-cols-2 items-start gap-3 sm:gap-5 lg:grid-cols-4">
         {t.stack.groups.map((group) => (
-          <div key={group.name} className="rounded-lg border border-line bg-panel p-5">
+          <div key={group.name} className="rounded-lg border border-line bg-panel p-4 sm:p-5">
             <h3 className="text-sm text-dim">
               <span className="text-line">~/</span>
               {group.name}
             </h3>
             <ul className="mt-4 space-y-2.5">
               {group.items.map((item) => (
-                <li key={item.name} className="flex items-center gap-2.5 text-sm">
-                  <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${LEVEL_STYLE[item.level].dot}`} />
-                  <span className={LEVEL_STYLE[item.level].text}>{item.name}</span>
+                <li key={item} className="flex items-baseline gap-2.5 text-sm text-fg/85">
+                  <span className="text-line" aria-hidden="true">
+                    -
+                  </span>
+                  {item}
                 </li>
               ))}
             </ul>

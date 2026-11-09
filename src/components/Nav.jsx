@@ -50,18 +50,41 @@ export default function Nav({ onOpenPalette }) {
             <span className={lang === 'bs' ? 'text-acc' : ''}>BS</span>
           </button>
 
+          {/* Desktop only. A keyboard shortcut advertised to a phone is a
+              button that promises something the device cannot do. */}
           <button
             type="button"
             onClick={onOpenPalette}
-            className="flex items-center gap-2 rounded border border-line px-2.5 py-1 text-[11px] text-dim transition-colors hover:border-acc/50 hover:text-acc"
+            className="hidden items-center gap-2 rounded border border-line px-2.5 py-1 text-[11px] text-dim transition-colors hover:border-acc/50 hover:text-acc md:flex"
           >
-            <span className="hidden sm:inline">{t.nav.command}</span>
+            <span>{t.nav.command}</span>
             <kbd className="rounded bg-raised px-1.5 py-0.5 font-mono text-[10px] text-fg/70">
               {MOD} K
             </kbd>
           </button>
         </div>
       </nav>
+
+      {/* The sections themselves, for phones: what the palette was standing in
+          for, as a strip that scrolls if it has to. */}
+      <div className="border-t border-line/70 md:hidden">
+        <ul className="mx-auto flex max-w-6xl items-center gap-0.5 overflow-x-auto px-2 py-1.5">
+          {SECTIONS.map((id, i) => (
+            <li key={id} className="shrink-0">
+              <a
+                href={`#${id}`}
+                className={cx(
+                  'block rounded px-1.5 py-1 text-[10px] transition-colors',
+                  active === id ? 'text-acc' : 'text-dim',
+                )}
+              >
+                <span className="text-line">{String(i + 1).padStart(2, '0')}_</span>
+                {t.nav[id]}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </header>
   )
 }

@@ -136,6 +136,9 @@ export const profile = {
   name: 'Zejd Delic',
   handle: 'zejd',
   email: 'deliczejd123@gmail.com',
+  // International format. Empty hides the WhatsApp button; wa.me gets it with
+  // every character but the digits stripped out.
+  phone: '+387 60 32 98 203',
   location: 'Bosna i Hercegovina',
   hero: heroPhoto,
   // Every link here is optional. Remove one and the places that show it — the
@@ -149,7 +152,7 @@ export const profile = {
  * Sections that are written but not filled in yet. Each keeps its heading,
  * note and anchor, and shows a placeholder where the content will go.
  */
-export const WIP_SECTIONS = ['approach', 'stack', 'lab']
+export const WIP_SECTIONS = []
 
 export const content = {
   /* ────────────────────────────────────────────────────────────── ENGLISH ── */
@@ -159,7 +162,6 @@ export const content = {
       approach: 'approach',
       stack: 'stack',
       path: 'path',
-      lab: 'lab',
       contact: 'contact',
       command: 'command',
     },
@@ -407,6 +409,20 @@ export const content = {
             'It got as far as talks with a few gyms, and I cannot say whether any of them ever ran it. What it did do is teach me .NET and working with a database properly — the same stack I then spent three years on in production at that company.',
           stack: ['.NET', 'SQL'],
         },
+        {
+          id: 'web',
+          name: 'Websites',
+          mark: 'Web',
+          badge: 'references on request',
+          context: 'Client work · clients in several countries',
+          summary:
+            'Client websites: business sites, web shops and booking sites, some written from scratch and some on WordPress.',
+          solution:
+            'The custom sites were built in whatever the job called for — plain HTML, CSS and JavaScript through to React and PHP. On the WordPress side it ran from standing a site up from nothing and building it out in Elementor to taking over sites that were already live: changes, maintenance and updates. On some of them the work also covered Google Ads optimisation and wiring the site up to Google Tag Manager.',
+          result:
+            'I do not list the individual sites here. Specific references and examples of the work can be shown on request.',
+          stack: ['WordPress', 'Elementor', 'PHP', 'React', 'JavaScript', 'Google Ads'],
+        },
       ],
     },
 
@@ -419,14 +435,64 @@ export const content = {
     approach: {
       heading: 'how i work',
       note: 'Opinions I hold loosely enough to change, strongly enough to act on.',
-      items: [],
+      items: [
+        {
+          title: 'The best solution, not the first that works',
+          body: 'Sometimes I get there in a couple of attempts, sometimes it takes a great many more. I do not stop at the first thing that holds together — the point is to find the best answer the problem allows. That is what I go by.',
+        },
+        {
+          title: 'An agreement is an agreement',
+          body: 'What gets agreed stands. I work to meet deadlines and to be dependable about them, and if something is about to slip I say so while it can still be dealt with, not once the date has passed.',
+        },
+        {
+          title: 'Production is the only honest test',
+          body: 'A plan can anticipate a lot, but real load and real users show what no plan did. I would rather put something smaller into use, watch how it holds and change it from there than settle the design in advance.',
+        },
+        {
+          title: 'The simplest thing that solves it',
+          body: 'A smaller answer somebody actually uses is worth more than a bigger one still waiting to be built. Before I add a layer, I ask whether it solves a real problem or only makes the thing look more serious.',
+        },
+        {
+          title: 'Knowing when to stop',
+          body: 'Deciding not to build something is also a decision. When the numbers say there is no point going further, it is better to admit it early than to drag a project along out of stubbornness.',
+        },
+        {
+          title: 'The job does not end at the code',
+          body: 'Far more than code decides how the final product turns out — how it is set up, how it looks, how it is presented and who ever hears about it. What matters to the person using it is whether the thing works and whether it makes sense.',
+        },
+      ],
     },
 
     stack: {
       heading: 'stack',
-      note: 'Honest labels. "Daily" means I could debug it half-asleep.',
-      levels: { daily: 'daily', working: 'working', touched: 'touched' },
-      groups: [],
+      note: 'What I actually work in, grouped by where it sits.',
+      groups: [
+        {
+          name: 'backend',
+          items: ['.NET', 'C#', 'SQL Server', 'PostgreSQL', 'Supabase', 'REST API', 'PHP'],
+        },
+        {
+          name: 'frontend',
+          items: ['React', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Vite'],
+        },
+        {
+          name: 'mobile-desktop',
+          items: ['Flutter', 'Dart', '.NET desktop'],
+        },
+        {
+          name: 'infra-tools',
+          items: [
+            'Git',
+            'GitHub',
+            'Cloudflare',
+            'Vercel',
+            'WordPress',
+            'Elementor',
+            'Google Ads',
+            'Google Tag Manager',
+          ],
+        },
+      ],
     },
 
     path: {
@@ -502,12 +568,6 @@ export const content = {
       certs: [],
     },
 
-    lab: {
-      heading: 'lab',
-      note: 'Small things built for no good reason. Usually the most fun.',
-      items: [],
-    },
-
     contact: {
       heading: 'contact',
       command: 'mail zejd',
@@ -520,6 +580,7 @@ export const content = {
       availability: 'Open to new work and collaborations.',
       responseTime: 'I usually reply within a day or two.',
       linkedin: 'LinkedIn',
+      whatsapp: 'WhatsApp',
     },
 
     footer: {
@@ -550,7 +611,6 @@ export const content = {
       approach: 'pristup',
       stack: 'stack',
       path: 'put',
-      lab: 'lab',
       contact: 'kontakt',
       command: 'komande',
     },
@@ -798,6 +858,20 @@ export const content = {
             'Stiglo se do pregovora s nekoliko teretana i ne mogu reći da je ijedna to zaista pustila u rad. Ono što jeste — na njemu sam naučio .NET i rad s bazom kako treba, isti stack na kojem sam poslije proveo tri godine u produkciji u toj firmi.',
           stack: ['.NET', 'SQL'],
         },
+        {
+          id: 'web',
+          name: 'Web stranice',
+          mark: 'Web',
+          badge: 'reference na upit',
+          context: 'Klijentski rad · klijenti iz više zemalja',
+          summary:
+            'Klijentski sajtovi: poslovne stranice za firme, webshopovi i stranice s rezervacijama, dio pisan od nule, dio na WordPressu.',
+          solution:
+            'Custom sajtovi su rađeni u onome što je posao tražio — od čistog HTML-a, CSS-a i JavaScripta do React-a i PHP-a. Na WordPressu je išlo od postavljanja sajta od nule i razrade u Elementoru do preuzimanja sajtova koji su već bili na mreži: izmjene, održavanje i update-i. Na dijelu njih je posao obuhvatao i Google Ads optimizaciju te povezivanje sajta s Google Tag Managerom.',
+          result:
+            'Pojedinačne sajtove ovdje ne navodim. Konkretne reference i primjeri rada mogu se pokazati na upit.',
+          stack: ['WordPress', 'Elementor', 'PHP', 'React', 'JavaScript', 'Google Ads'],
+        },
       ],
     },
 
@@ -810,14 +884,64 @@ export const content = {
     approach: {
       heading: 'kako radim',
       note: 'Stavovi koje držim dovoljno labavo da ih promijenim, dovoljno čvrsto da po njima radim.',
-      items: [],
+      items: [
+        {
+          title: 'Najbolje rješenje, a ne prvo koje radi',
+          body: 'Nekad do njega dođem iz par pokušaja, nekad treba mnogo više. Ne stajem na prvom koje se nekako drži — poenta je pronaći najbolje rješenje koje problem dopušta. To je ono čime se vodim.',
+        },
+        {
+          title: 'Dogovor je dogovor',
+          body: 'Ono što se dogovori, to i stoji. Trudim se da rokove ispoštujem i da budem regularan u tome, a ako nešto prijeti da iskoči, reći ću na vrijeme, dok se još može riješiti, a ne kad rok prođe.',
+        },
+        {
+          title: 'Produkcija je jedini pošten test',
+          body: 'Plan može predvidjeti mnogo toga, ali stvarno opterećenje i stvarni korisnici pokažu ono što nijedan plan nije. Radije pustim nešto manje u rad, gledam kako se drži i mijenjam po tome, nego da dizajn rješavam unaprijed.',
+        },
+        {
+          title: 'Najjednostavnije što rješava problem',
+          body: 'Manje rješenje koje neko zaista koristi vrijedi više od većeg koje tek čeka da bude napravljeno. Prije nego što dodam sloj, pitam se rješava li on stvaran problem ili stvar samo čini ozbiljnijom na izgled.',
+        },
+        {
+          title: 'Znati stati',
+          body: 'I odluka da se nešto ne gradi je odluka. Kad brojke kažu da nema smisla ići dalje, bolje je to priznati rano nego projekat vući iz inata.',
+        },
+        {
+          title: 'Posao ne prestaje na kodu',
+          body: 'Na to kakav će finalni proizvod biti utiče mnogo više od koda — kako je postavljen, kako izgleda, kako se predstavi i ko za njega uopšte čuje. Onome ko ga koristi važno je radi li stvar i je li mu jasna.',
+        },
+      ],
     },
 
     stack: {
       heading: 'stack',
-      note: 'Iskrene oznake. "Svaki dan" znači da bih to debugovao polubudan.',
-      levels: { daily: 'svaki dan', working: 'radno', touched: 'dodirnuo' },
-      groups: [],
+      note: 'Ono u čemu zaista radim, složeno po tome gdje stoji.',
+      groups: [
+        {
+          name: 'backend',
+          items: ['.NET', 'C#', 'SQL Server', 'PostgreSQL', 'Supabase', 'REST API', 'PHP'],
+        },
+        {
+          name: 'frontend',
+          items: ['React', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Vite'],
+        },
+        {
+          name: 'mobile-desktop',
+          items: ['Flutter', 'Dart', '.NET desktop'],
+        },
+        {
+          name: 'infra-alati',
+          items: [
+            'Git',
+            'GitHub',
+            'Cloudflare',
+            'Vercel',
+            'WordPress',
+            'Elementor',
+            'Google Ads',
+            'Google Tag Manager',
+          ],
+        },
+      ],
     },
 
     path: {
@@ -892,12 +1016,6 @@ export const content = {
       certs: [],
     },
 
-    lab: {
-      heading: 'lab',
-      note: 'Male stvari napravljene bez dobrog razloga. Obično najzabavnije.',
-      items: [],
-    },
-
     contact: {
       heading: 'kontakt',
       command: 'mail zejd',
@@ -910,6 +1028,7 @@ export const content = {
       availability: 'Otvoren za nove suradnje i poslove.',
       responseTime: 'Odgovaram obično u roku od dan-dva.',
       linkedin: 'LinkedIn',
+      whatsapp: 'WhatsApp',
     },
 
     footer: {
@@ -935,4 +1054,4 @@ export const content = {
 }
 
 /** Section ids, in page order. Used by the nav, scrollspy and command palette. */
-export const SECTIONS = ['work', 'approach', 'stack', 'path', 'lab', 'contact']
+export const SECTIONS = ['work', 'approach', 'stack', 'path', 'contact']

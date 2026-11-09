@@ -27,7 +27,7 @@ export default function Section({
       id={id}
       ref={ref}
       className={cx(
-        'mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28',
+        'mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20',
         inView ? 'animate-rise' : 'opacity-0',
         className,
       )}
@@ -43,7 +43,7 @@ export default function Section({
 
       {note && <p className="mt-3 max-w-2xl font-sans text-sm text-dim">{note}</p>}
 
-      <div className="mt-10">{wip ? <Wip copy={wipCopy} file={file} /> : children}</div>
+      <div className="mt-8 sm:mt-10">{wip ? <Wip copy={wipCopy} file={file} /> : children}</div>
     </section>
   )
 }

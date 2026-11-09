@@ -19,8 +19,15 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Sticky nav is 3.5rem; keep anchored sections clear of it. */
-    scroll-padding-top: 5rem;
+    /* The nav is 3.5rem, plus a second row of section links below md.
+       Keep anchored sections clear of whichever is on screen. */
+    scroll-padding-top: 7rem;
+  }
+
+  @media (width >= 48rem) {
+    html {
+      scroll-padding-top: 5rem;
+    }
   }
 
   body {

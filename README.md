@@ -88,6 +88,12 @@ captures of a running product, so nobody reads a mockup as a shipped app.
 A work-history entry can point at a project with `project: { id, name }`, which renders a
 link that scrolls to that project's row and opens it.
 
+Not every row needs a folder. A project with no logo sets `mark` and its name is set as a
+wordmark instead; one with no screenshots leaves `shots` out and the strip is skipped; one
+with nothing to link to leaves `links` out and the buttons are skipped. Every field the
+row draws is optional, so `web` — client websites named by kind rather than by client, and
+deliberately without URLs — is nothing but text and a badge.
+
 ### Company logos
 
 Drop them in `src/assets/companies/` — PNG, JPG, WebP, AVIF or SVG — and point a work
@@ -144,10 +150,15 @@ framed differently needs those moved.
 | — | `top`      | `components/Hero.jsx`               | `whoami` then `cat profile.txt`, typed in sequence |
 | 1 | `work`     | `components/Work.jsx`               | case studies: problem / decision / trade-off / result |
 | 2 | `approach` | `components/Approach.jsx`           | how you work                                |
-| 3 | `stack`    | `components/Stack.jsx`              | tools grouped by layer, honest skill labels |
+| 3 | `stack`    | `components/Stack.jsx`              | tools grouped by layer, listed without skill levels |
 | 4 | `path`     | `components/Path.jsx`               | experience rendered as a git log            |
-| 5 | `lab`      | `components/Lab.jsx`                | side projects and experiments               |
-| 6 | `contact`  | `components/Contact.jsx`            | email, copy button, links                   |
+| 5 | `contact`  | `components/Contact.jsx`            | email, copy button, links                   |
+
+There was a sixth, `lab`, for side projects and experiments. It was removed rather than
+left standing empty — a section that reads "in progress" for months says more about the
+site than a missing one does. Bringing it back means a `lab` entry in `SECTIONS`, a nav
+label, an `items` array and a component; the shape it had was a card per item with a name,
+a description, a tag and an optional link.
 
 Add or reorder sections by editing the `SECTIONS` array at the bottom of `src/content.js`
 and the render order in [`src/App.jsx`](src/App.jsx). The nav, scrollspy and command
@@ -156,7 +167,14 @@ palette all read from that array.
 ## Details worth knowing
 
 - **`Ctrl/⌘ + K`** opens the command palette — navigation, language switch, copy email,
-  LinkedIn. Arrow keys and Enter work; Escape closes.
+  LinkedIn. Arrow keys and Enter work; Escape closes. It is desktop only: below `md` the
+  button and the hint in the hero are both hidden, since a phone has no modifier key to
+  press. Phones get the sections as a strip under the header instead, which is also why
+  `scroll-padding-top` in [`src/index.css`](src/index.css) is taller below `md` — the
+  header is two rows there.
+- **WhatsApp** appears in the contact section only when `profile.phone` is filled in
+  `src/content.js`. Write the number however it reads best; everything but the digits is
+  stripped out for the `wa.me` link.
 - **The hero types itself out** as two commands in sequence — `whoami` prints the intro,
   then `cat profile.txt` prints the facts beneath it.
 - **The fact values keep rewriting themselves.** Labels (`location`, `focus`, `experience`)

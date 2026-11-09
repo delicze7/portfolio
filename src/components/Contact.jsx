@@ -9,7 +9,7 @@ export default function Contact() {
   const c = t.contact
 
   return (
-    <Section id="contact" index={6} file="contact.sh" heading={c.heading}>
+    <Section id="contact" index={5} file="contact.sh" heading={c.heading}>
       <div className="relative overflow-hidden rounded-lg border border-line bg-panel p-6 sm:p-10">
         {/* Closing beat of the page, so it gets the one warm spot on it. */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(74,222,128,0.10),transparent_60%)]" />
@@ -53,6 +53,20 @@ export default function Contact() {
             >
               ./{c.send}
             </a>
+
+            {/* wa.me wants digits only, so the number can be written here
+                however it reads best. */}
+            {profile.phone && (
+              <a
+                href={`https://wa.me/${profile.phone.replace(/\D/g, '')}`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${c.whatsapp} ${profile.phone}`}
+                className="rounded border border-acc/60 bg-acc/10 px-5 py-2.5 text-sm text-acc transition-colors hover:bg-acc/20"
+              >
+                {c.whatsapp} ↗
+              </a>
+            )}
 
             {profile.links.linkedin && (
               <a

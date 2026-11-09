@@ -131,7 +131,8 @@ export default function Hero({ ready }) {
                 </span>
               </div>
 
-              <p className="mt-6 text-xs text-dim/70">
+              {/* Same reason as the nav button: no shortcut hint on a phone. */}
+              <p className="mt-6 hidden text-xs text-dim/70 md:block">
                 <kbd className="rounded border border-line bg-raised px-1.5 py-0.5 text-[10px] text-fg/70">
                   {MOD}
                 </kbd>{' '}

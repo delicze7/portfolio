@@ -7,7 +7,6 @@ import Work from './components/Work.jsx'
 import Approach from './components/Approach.jsx'
 import Stack from './components/Stack.jsx'
 import Path from './components/Path.jsx'
-import Lab from './components/Lab.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import CommandPalette from './components/CommandPalette.jsx'
@@ -57,7 +56,6 @@ export default function App() {
         <Approach />
         <Stack />
         <Path />
-        <Lab />
         <Contact />
       </main>
 
